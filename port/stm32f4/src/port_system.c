@@ -255,8 +255,17 @@ void port_system_gpio_config_alternate(GPIO_TypeDef *p_port, uint8_t pin, uint8_
   p_port->AFR[(uint8_t)(pin / 8)] |= (alternate << displacement);
 }
 
-bool port_system_gpio(GPIO_TypeDef * p_port, uint8_t pin){
-  
+bool port_system_gpio_read(GPIO_TypeDef * p_port, uint8_t pin){
+  return (bool)(p_port->IDR & BIT_POS_TO_MASK(pin));
+}
+
+void port_system_gpio_write(GPIO_TypeDef * p_port, uint8_t pin, bool value){
+  if (!value) p_port->ODR |= (BIT_POS_TO_MASK(pin) << 16);
+  if (value) p_port->ODR |= (BIT_POS_TO_MASK(pin));
+}
+
+void port_system_gpio_toggle(GPIO_TypeDef * p_port, uint8_t pin){
+  port_system_gpio_write(p_port, pin, !port_system_gpio_read(p_port, pin));
 }
 
 // ------------------------------------------------------

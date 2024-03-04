@@ -23,7 +23,7 @@
 #define BUTTON_0_ID 0
 #define BUTTON_0_GPIO GPIOC // Revisar
 #define BUTTON_0_PIN 13
-#define BUTTON_0_DEBOUNCE_TIME_MS 100
+#define BUTTON_0_DEBOUNCE_TIME_MS 110
 
 /* Typedefs --------------------------------------------------------------------*/
 typedef struct{

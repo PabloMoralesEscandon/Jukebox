@@ -246,4 +246,10 @@ void port_system_gpio_exti_enable(uint8_t pin, uint8_t priority, uint8_t subprio
  */
 void port_system_gpio_exti_disable(uint8_t pin);
 
+bool port_system_gpio_read(GPIO_TypeDef * p_port, uint8_t pin);
+
+void port_system_gpio_write(GPIO_TypeDef * p_port, uint8_t pin, bool value);
+
+void port_system_gpio_toggle(GPIO_TypeDef * p_port, uint8_t pin);
+
 #endif /* PORT_SYSTEM_H_ */
