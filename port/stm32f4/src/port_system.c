@@ -124,12 +124,12 @@ size_t port_system_init()
 //------------------------------------------------------
 uint32_t port_system_get_millis()
 {
-  return 0;
+  return msTicks;
 }
 
 void port_system_set_millis(uint32_t ms)
 {
-  
+  msTicks = ms;
 }
 
 void port_system_delay_ms(uint32_t ms)
@@ -253,6 +253,10 @@ void port_system_gpio_config_alternate(GPIO_TypeDef *p_port, uint8_t pin, uint8_
 
   p_port->AFR[(uint8_t)(pin / 8)] &= ~(base_mask << displacement);
   p_port->AFR[(uint8_t)(pin / 8)] |= (alternate << displacement);
+}
+
+bool port_system_gpio(GPIO_TypeDef * p_port, uint8_t pin){
+  
 }
 
 // ------------------------------------------------------
