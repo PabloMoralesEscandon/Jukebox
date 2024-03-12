@@ -21,8 +21,6 @@ port_button_hw_t buttons_arr[] = {
 void port_button_init(uint32_t button_id){
     GPIO_TypeDef *p_port = buttons_arr[button_id].p_port;
     uint8_t pin = buttons_arr[button_id].pin;
-
-    /* TO-DO alumnos */
     port_system_gpio_config(p_port, pin, GPIO_MODE_IN, GPIO_PUPDR_NOPULL);
     port_system_gpio_config_exti(p_port, pin, 0x0B);
     port_system_gpio_exti_enable(pin, 0x01, 0x00);

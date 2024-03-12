@@ -3,8 +3,8 @@
 
 ## Authors
 
-* **Alumno 1** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
-* **Alumno 2** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
+* **Pablo Morales Escandón** - email: [pablo.morales@alumnos.upm.es](mailto:pablo.morales@alumnos.upm.es)
+* **Noel Solís Verdesoto** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
 
 
 Ponga una breve descripción del proyecto **aquí** en castellano e inglés.
