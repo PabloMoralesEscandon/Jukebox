@@ -25,10 +25,8 @@ port_usart_hw_t usart_arr[] = {
         .pin_rx = USART_0_PIN_RX,
         .alt_func_tx = USART_0_AF_TX,
         .alt_func_rx = USART_0_AF_RX,
-        .input_buffer = 0,
         .i_idx = 0,
         .read_complete = false,
-        .output_buffer = 0,
         .o_idx = 0,
         .write_complete = false
     }
@@ -87,10 +85,10 @@ void port_usart_init(uint32_t usart_id)
         0d.166 = 0x2
         USARTDIV = 0x0682
     */
-    p_usart -> BRR = 0x0682;
+    p_usart -> BRR = 0x0683;
 
     // Enable tx and rx
-    p_usart -> CR1 &= USART_CR1_TE | USART_CR1_RE;
+    p_usart -> CR1 = USART_CR1_TE | USART_CR1_RE;
 
     // Disable rx interrupts
     port_usart_disable_rx_interrupt(usart_id);
@@ -122,8 +120,8 @@ void port_usart_init(uint32_t usart_id)
     p_usart -> CR1 |= USART_CR1_UE;
 
     // Clear buffers
-    _reset_buffer(usart_arr[usart_id].o_idx, USART_OUTPUT_BUFFER_LENGTH);
-    _reset_buffer(usart_arr[usart_id].i_idx, USART_INPUT_BUFFER_LENGTH);
+    _reset_buffer(usart_arr[usart_id].output_buffer, USART_OUTPUT_BUFFER_LENGTH);
+    _reset_buffer(usart_arr[usart_id].input_buffer, USART_INPUT_BUFFER_LENGTH);
 
 }
 
@@ -132,7 +130,7 @@ void port_usart_get_from_input_buffer(uint32_t usart_id, char* p_buffer){
 }
 
 bool port_usart_get_txr_status(uint32_t usart_id){
-    return ((usart_arr[usart_id].p_usart -> CR1) && USART_CR1_TXEIE); //Checkear
+    return ((usart_arr[usart_id].p_usart -> SR) & USART_SR_TXE);
 }
 
 void port_usart_copy_to_output_buffer(uint32_t usart_id, char *p_data, uint32_t length){
@@ -140,11 +138,13 @@ void port_usart_copy_to_output_buffer(uint32_t usart_id, char *p_data, uint32_t 
 }
 
 void port_usart_reset_input_buffer(uint32_t usart_id){
-    _reset_buffer(usart_arr[usart_id].i_idx, USART_INPUT_BUFFER_LENGTH);
+    _reset_buffer(usart_arr[usart_id].input_buffer, USART_INPUT_BUFFER_LENGTH);
+    usart_arr[usart_id].read_complete = false;
 }
 
 void port_usart_reset_output_buffer(uint32_t usart_id){
-    _reset_buffer(usart_arr[usart_id].o_idx, USART_OUTPUT_BUFFER_LENGTH);
+    _reset_buffer(usart_arr[usart_id].output_buffer, USART_OUTPUT_BUFFER_LENGTH);
+    usart_arr[usart_id].write_complete = false;
 }
 
 bool port_usart_rx_done(uint32_t usart_id){
@@ -156,31 +156,28 @@ bool port_usart_tx_done(uint32_t usart_id){
 }
 
 void port_usart_store_data(uint32_t usart_id){
-    port_usart_hw_t usart = usart_arr[usart_id];
-    char data = usart.p_usart -> DR;
+    char data = usart_arr[usart_id].p_usart -> DR;
     if (data != END_CHAR_CONSTANT){
-        if(usart.i_idx >= USART_INPUT_BUFFER_LENGTH){
-            usart.i_idx = 0;
+        if(usart_arr[usart_id].i_idx >= USART_INPUT_BUFFER_LENGTH){
+            usart_arr[usart_id].i_idx = 0;
         }
-        usart.input_buffer[usart.i_idx] = data;
-        usart.i_idx += 1;
+        usart_arr[usart_id].input_buffer[usart_arr[usart_id].i_idx] = data;
+        usart_arr[usart_id].i_idx += 1;
     } else{
-        usart.read_complete = true;
-        usart.i_idx = 0;
+        usart_arr[usart_id].read_complete = true;
+        usart_arr[usart_id].i_idx = 0;
     }
 }
 
 void port_usart_write_data(uint32_t usart_id){
-    port_usart_hw_t usart = usart_arr[usart_id];
-    char data = usart.output_buffer[usart.o_idx];
-    if ((usart.o_idx == USART_OUTPUT_BUFFER_LENGTH - 1) || (data == END_CHAR_CONSTANT)){
-        usart.p_usart -> DR = data;
+    if ((usart_arr[usart_id].o_idx == USART_OUTPUT_BUFFER_LENGTH - 1) || (usart_arr[usart_id].output_buffer[usart_arr[usart_id].o_idx] == END_CHAR_CONSTANT)){
+        usart_arr[usart_id].p_usart -> DR = usart_arr[usart_id].output_buffer[usart_arr[usart_id].o_idx];
         port_usart_disable_tx_interrupt(usart_id);
-        usart.o_idx = 0;
-        usart.write_complete = true;
-    } else if(data != EMPTY_BUFFER_CONSTANT){
-        usart.p_usart -> DR = data;
-        usart.o_idx += 1;
+        usart_arr[usart_id].o_idx = 0;
+        usart_arr[usart_id].write_complete = true;
+    } else if(usart_arr[usart_id].output_buffer[usart_arr[usart_id].o_idx] != EMPTY_BUFFER_CONSTANT){
+        usart_arr[usart_id].p_usart -> DR = usart_arr[usart_id].output_buffer[usart_arr[usart_id].o_idx];
+        usart_arr[usart_id].o_idx += 1;
     }
 }
 

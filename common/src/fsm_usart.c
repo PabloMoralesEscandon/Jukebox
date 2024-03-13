@@ -44,7 +44,7 @@ static void do_get_data_rx(fsm_t *p_this){
 static void do_set_data_tx(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     port_usart_reset_output_buffer(p_fsm->usart_id);
-    port_usart_copy_from_output_buffer(p_fsm->usart_id, p_fsm->out_data, USART_OUTPUT_BUFFER_LENGTH);
+    port_usart_copy_to_output_buffer(p_fsm->usart_id, p_fsm->out_data, USART_OUTPUT_BUFFER_LENGTH);
     while(!port_usart_get_txr_status(p_fsm->usart_id)){}
     port_usart_write_data(p_fsm->usart_id);
     port_usart_enable_tx_interrupt(p_fsm->usart_id);
@@ -86,8 +86,7 @@ fsm_t *fsm_usart_new(uint32_t usart_id){
 void fsm_usart_init(fsm_t *p_this, uint32_t usart_id){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     
-    /* TO-DO alumnos: */
-    fsm_init(p_fsm, fsm_trans_usart);
+    fsm_init(p_this, fsm_trans_usart);
     p_fsm->usart_id = usart_id;
     p_fsm->data_received = false;
     memset(p_fsm->in_data, EMPTY_BUFFER_CONSTANT, USART_INPUT_BUFFER_LENGTH);
