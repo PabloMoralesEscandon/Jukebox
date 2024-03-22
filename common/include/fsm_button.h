@@ -19,6 +19,7 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Enums */
+/// @brief Enumerates the Button FSM states
 enum FSM_BUTTON {
     BUTTON_RELEASED = 0,    /*!< Initial state. Button is released and can switch to pressed */
     BUTTON_PRESSED_WAIT,    /*!< Button is pressed and the anti-debounce is active */
@@ -27,6 +28,7 @@ enum FSM_BUTTON {
 };
 
 /* Typedefs --------------------------------------------------------------------*/
+/// @brief Structure that defines a Button FSM
 typedef struct{
     fsm_t f;                /*!< FSM for the button */
     uint32_t debounce_time; /*!< Debounce time in ms */

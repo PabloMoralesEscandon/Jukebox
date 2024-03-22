@@ -1,4 +1,4 @@
-# Título del proyecto
+# Juxebox V1 y V2
 
 
 ## Authors
@@ -7,82 +7,77 @@
 * **Noel Solís Verdesoto** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
 
 
-Ponga una breve descripción del proyecto **aquí** en castellano e inglés.
+Desarrollo de un programa capaz de emitir melodías por un Buzzer en la placa Nucleo-STM32. A futuro aún no hemos decidido que más implementaremos.
 
-Puede añadir una imagen de portada **de su propiedad** aquí. Por ejemplo, del montaje final, o una captura de osciloscopio, etc.
+**Montaje actual:**
 
-**Las imágenes se deben guardar en la carpeta `docs/assets/imgs/` y se pueden incluir en el documento de la siguiente manera:**
+![Montaje de la V2](docs/assets/imgs/montajeV2.png)
 
-```markdown
-![Texto alternativo](docs/assets/imgs/imagen.png)
-``` 
+Por ahora unicamente es capaz de recibir y enviar información por la interfaz UART y de detectar pulsaciones del botón de usuario.
 
-**Añada un enlace a un vídeo público de su propiedad aquí con la demostración del proyecto explicando lo que haya hecho en la versión V5.**
+### Desmotración
+Usando el programa de test proporcionado podemos ver que la placa es capaz de detectar la pulsación del botón y enviar por la terminal serie (mediante la interfaz UART) un mensaje.
 
-Para añadir un enlace a un vídeo de Youtube, puede usar el siguiente código:
+![Mensaje de la placa](docs/assets/imgs/mensajeplaca.png)
 
-```markdown
-[![Texto alternativo](docs/assets/imgs/imagen.png)](https://youtu.be/ID_DEL_VIDEO "Texto al pasar el ratón por encima de la imagen.")
-```
+A su vez la placa es capaz de leer un mensaje enviado por el ordenador, en este caso imprime el contenido leído a la terminal.  
+
+![Mensaje del ordenador](docs/assets/imgs/mensajeordenador.png)  
+
+![Respuesta de la placa](docs/assets/imgs/respuestaplaca.png)  
 
 ## Version 1
-Breve descripción de la versión 1.
+Desarrollo del código para un botón.
 
-- Para poner un texto en negrita se usa el símbolo `**` de manera consecutiva. Por ejemplo: **Texto en negrita**
-- Para poner un texto en cursiva se usa el símbolo `*` de manera consecutiva. Por ejemplo: *Texto en cursiva*
-- Para poner un texto en cursiva y negrita se usa el símbolo `***` de manera consecutiva. Por ejemplo: ***Texto en cursiva y negrita***
+- Se desarrolla el código completo para un solo botón (el de usauario) pero preparado para la implementación de más botones.
+- Se implementa además un sistema anti-rebotes (debounce).
+- Se hace uso de una máquina de estados (FSM) para contolar el estado del botón.
 
-Para añadir subsecciones se usa el símbolo `#` de manera consecutiva. Por ejemplo:
+### Common
+Desarrollo de la librería common (de uso general).
 
-### Subsección 1
-Breve descripción de la subsección 1.
+* [fsm_button.h](fsm__button_8h.html).
+* [fsm_button.c](fsm__button_8c.html).
 
-Para añadir una lista de elementos se usa el símbolo `-` de manera consecutiva. Por ejemplo:
+Se implementa la FSM acorde a la siguiente tabla:
+![Tabla de la FSM del botón](docs/assets/imgs/fsmboton.png)
 
-- Elemento 1
-- Elemento 2
-- Elemento 3
+### Port
+Desarrollo del código específico a la placa.
 
-Para añadir una lista de elementos numerados se usa el símbolo `1.` de manera consecutiva. Por ejemplo:
-
-1. Elemento 1
-2. Elemento 2
-3. Elemento 3
-
-Para añadir un enlace a una página web se usa el siguiente código:
-
-```markdown
-Enlace a [Google](https://www.google.com).
-```
-
-Puede añadir tablas de la siguiente manera:
-
-| Columna 1 | Columna 2 | Columna 3 |
-| --------- | --------- | --------- |
-| Valor 1   | Valor 2   | Valor 3   |
-| Valor 4   | Valor 5   | Valor 6   |
-
-Para añadir un enlace a un fichero `.c` o `.h` puede usar el siguiente código. Se trata de enlaces a ficheros `.html` que se generan automáticamente con la documentación del código al ejecutar Doxygen y que se encuentran en la carpeta `docs/html/`.
-
-```markdown
-Enlace a la [FSM de Version 1](fsm__button_8c.html).
-```
-
-
+* [port_button.h](port__button_8h.html).
+* [port_button.c](port__button_8c.html).
 
 ## Version 2
-Breve descripción de la versión 2.
+Desarrollo del código para hacer uso de la interfaz UART para recibir y enviar información al ordenador.
+
+- Se desarrolla el código completo para la UART 3 pero preparado para la implementación de más UART si es necesario.
+- Se hace uso de una máquina de estados (FSM) para contolar los estados de la UART.
+
+### Common
+Desarrollo de la librería common (de uso general).
+
+* [fsm_usart.h](fsm__usart_8h.html).
+* [fsm_usart.c](fsm__usart_8c.html).
+
+Se implementa la FSM acorde a la siguiente tabla:
+![Tabla de la FSM de la UART](docs/assets/imgs/fsmuart.png)
+
+### Port
+Desarrollo del código específico a la placa.
+
+* [port_usart.h](port__usart_8h.html).
+* [port_usart.c](port__usart_8c.html).
 
 
 ## Version 3
-Breve descripción de la versión 3.
+**WIP**
 
 
 ## Version 4
-Breve descripción de la versión 4.
+**WIP**
 
 
 ## Version 5
-
-Breve descripción de la versión 5.
+**WIP**
 

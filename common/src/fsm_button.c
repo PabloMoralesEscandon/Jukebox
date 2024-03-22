@@ -64,7 +64,7 @@ static fsm_trans_t fsm_trans_button[] = {
     {BUTTON_PRESSED, check_button_released, BUTTON_RELEASED_WAIT, do_set_duration },
     {BUTTON_RELEASED_WAIT, check_timeout, BUTTON_RELEASED, NULL },
     {-1, NULL, -1, NULL },
-};
+}; /*!< Array that contains the transitions table for the FSM */
 
 uint32_t fsm_button_get_duration(fsm_t *p_this){
     fsm_button_t *p_fsm = (fsm_button_t *)(p_this);

@@ -1,9 +1,9 @@
 /**
  * @file fsm_usart.c
  * @brief USART FSM main file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Pablo Morales
+ * @author Noel Solís
+ * @date 26-2-2024
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -17,16 +17,25 @@
 
 /* State machine input or transition functions */
 
+/// @brief Checks if there is received data
+/// @param p_this Pointer to an fsm struct that corresponds to an UART
+/// @return True if there is received data, false if not
 static bool check_data_rx(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     return port_usart_rx_done(p_fsm->usart_id);
 }
 
+/// @brief Checks if there is data to be sent
+/// @param p_this Pointer to an fsm struct that corresponds to an UART
+/// @return True if there is data to be sent, false if not
 static bool check_data_tx(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     return (p_fsm->out_data[0])!=EMPTY_BUFFER_CONSTANT;
 }
 
+/// @brief Checks if data is sent
+/// @param p_this Pointer to an fsm struct that corresponds to an UART
+/// @return True if data is sent, false if not
 static bool check_tx_end(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     return port_usart_tx_done(p_fsm->usart_id);
@@ -34,6 +43,8 @@ static bool check_tx_end(fsm_t *p_this){
 
 /* State machine output or action functions */
 
+/// @brief Gets received data
+/// @param p_this Pointer to an fsm struct that corresponds to an UART
 static void do_get_data_rx(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     port_usart_get_from_input_buffer(p_fsm->usart_id, p_fsm->in_data);
@@ -41,6 +52,8 @@ static void do_get_data_rx(fsm_t *p_this){
     p_fsm->data_received = true;
 }
 
+/// @brief Sets data to be sent
+/// @param p_this Pointer to an fsm struct that corresponds to an UART
 static void do_set_data_tx(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     port_usart_reset_output_buffer(p_fsm->usart_id);
@@ -50,12 +63,15 @@ static void do_set_data_tx(fsm_t *p_this){
     port_usart_enable_tx_interrupt(p_fsm->usart_id);
 }
 
+/// @brief Finishes sending data
+/// @param p_this Pointer to an fsm struct that corresponds to an UART
 static void do_tx_end(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     port_usart_reset_output_buffer(p_fsm->usart_id);
     memset(p_fsm->out_data, EMPTY_BUFFER_CONSTANT, USART_OUTPUT_BUFFER_LENGTH);
 }
 
+/// @brief Array containing the transition table for the UART FSM
 static fsm_trans_t fsm_trans_usart[] = {
     {WAIT_DATA, check_data_tx, SEND_DATA, do_set_data_tx},
     {WAIT_DATA, check_data_rx, WAIT_DATA, do_get_data_rx},

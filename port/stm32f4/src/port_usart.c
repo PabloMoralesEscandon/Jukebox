@@ -1,10 +1,10 @@
 /**
  * @file port_usart.c
  * @brief Portable functions to interact with the USART FSM library.
- * @author alumno1
- * @author alumno2
- * @date fecha
- */
+ * @author Pablo Morales
+ * @author Noel Solis
+ * @date 04-3-2024
+*/
 /* Includes ------------------------------------------------------------------*/
 /* Standard C libraries */
 #include <string.h>
@@ -35,6 +35,9 @@ port_usart_hw_t usart_arr[] = {
 
 /* Private functions */
 
+/// @brief Resets buffer
+/// @param buffer Pointer to buffer
+/// @param length Buffer length
 void _reset_buffer(char* buffer, uint32_t length){
     memset(buffer, EMPTY_BUFFER_CONSTANT, length);
 }

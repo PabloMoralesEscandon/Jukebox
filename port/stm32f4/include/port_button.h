@@ -19,17 +19,24 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
-
+/// @brief Button 0 identifier
 #define BUTTON_0_ID 0
-#define BUTTON_0_GPIO GPIOC // Revisar
+
+/// @brief Button 0 GPIO port
+#define BUTTON_0_GPIO GPIOC
+
+/// @brief Button 0 pin
 #define BUTTON_0_PIN 13
+
+/// @brief Button 0 debounce time in ms
 #define BUTTON_0_DEBOUNCE_TIME_MS 110
 
 /* Typedefs --------------------------------------------------------------------*/
+/// @brief Structure that defines the HW of a button
 typedef struct{
-    GPIO_TypeDef *p_port;
-    uint8_t pin;
-    bool flag_pressed;
+    GPIO_TypeDef *p_port;   /*!< Pointer tohe GPIO struct to which the button is connected */
+    uint8_t pin;            /*!< Pin to which the button is connected */
+    bool flag_pressed;      /*!< Flag to indicate wether the button is pressed or not */
 } port_button_hw_t;
 
 /* Global variables */
