@@ -34,7 +34,7 @@
 /* Typedefs --------------------------------------------------------------------*/
 /// @brief Structure that defines the HW of a button
 typedef struct{
-    GPIO_TypeDef *p_port;   /*!< Pointer tohe GPIO struct to which the button is connected */
+    GPIO_TypeDef *p_port;   /*!< Pointer to the GPIO struct to which the button is connected */
     uint8_t pin;            /*!< Pin to which the button is connected */
     bool flag_pressed;      /*!< Flag to indicate wether the button is pressed or not */
 } port_button_hw_t;
