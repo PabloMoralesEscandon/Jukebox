@@ -14,7 +14,7 @@
 #include "port_system.h"
 #include "port_button.h"
 #include "port_usart.h"
-//#include "port_buzzer.h"
+#include "port_buzzer.h"
 
 /**
  * @brief Interrupt service routine for the System tick timer (SysTick).
@@ -46,4 +46,10 @@ void USART3_IRQHandler(void){
   if((p_usart -> SR && USART_SR_TXE) && (p_usart -> CR1 && USART_CR1_TXEIE)){
     port_usart_write_data(USART_0_ID);
   }
+}
+
+void TIM2_IRQHandler(void){
+  // Clear the update interrupt flag
+  TIM2->SR = ~TIM_SR_UIF;
+  buzzers_arr[0].note_end = true;
 }
