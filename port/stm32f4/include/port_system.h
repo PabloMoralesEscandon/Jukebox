@@ -252,4 +252,20 @@ void port_system_gpio_write(GPIO_TypeDef * p_port, uint8_t pin, bool value);
 
 void port_system_gpio_toggle(GPIO_TypeDef * p_port, uint8_t pin);
 
+/// @brief Put system in Stop Mode
+void port_system_power_stop();
+
+/// @brief Put system in Sleep Mode
+void port_system_power_sleep();
+
+/// @brief Stop SysTick interrupts
+void port_system_systick_suspend();
+
+/// @brief Resume SysTick interrupts
+void port_system_systick_resume();
+
+/// @brief Switch to low power consumption mode
+/// @param  void
+void port_system_sleep(void);
+
 #endif /* PORT_SYSTEM_H_ */
