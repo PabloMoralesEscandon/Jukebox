@@ -16,7 +16,7 @@
 
 /* HW dependent includes */
 #include "stm32f4xx.h"
-
+#include <stm32f4xx_hal.h>
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
 #define BIT_POS_TO_MASK(x) (0x01 << (x))                                                                /*!< Convert the index of a bit into a mask by left shifting */
@@ -42,8 +42,9 @@
 #define GPIO_MODE_IN 0x00        /*!< GPIO as input */
 #define GPIO_MODE_OUT 0x01       /*!< GPIO as output */
 #define GPIO_MODE_ALTERNATE 0x02 /*!< GPIO as alternate function */
+#ifndef GPIO_MODE_ANALOG
 #define GPIO_MODE_ANALOG 0x03    /*!< GPIO as analog */
-
+#endif
 #define GPIO_PUPDR_NOPULL 0x00 /*!< GPIO no pull up or down */
 #define GPIO_PUPDR_PUP 0x01    /*!< GPIO pull up */
 #define GPIO_PUPDR_PDOWN 0x02  /*!< GPIO pull down */
