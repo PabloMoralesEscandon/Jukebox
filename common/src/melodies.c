@@ -51,9 +51,9 @@ const melody_t happy_birthday_melody = {.p_name = "happy_birthday",
  * The notes are defined as frequency values in Hertz, and they are arranged in the order they are played in the song.
  */
 static const double tetris_notes[TETRIS_LENGTH] = {
-    MI5, SI4, DO5, RE5, DO5, SI4, LA4, LA4, DO5, MI5, RE5, DO5, SI4, DO5, RE5, MI5, DO5, LA4,
-    LA4, LA4, SI4, DO5, RE5, FA4, LA5, SOL5, FA5, MI5, DO5, MI5, RE5, DO5, SI4, SI4, LA4, RE5,
-    MI5, DO5, LA4, LA4};
+        MI5, SI4, DO5, RE5, DO5, SI4, LA4, LA4, DO5, MI5, RE5, DO5, SI4, DO5, RE5, MI5, DO5, LA4,
+        LA4, LA4, SI4, DO5, RE5, FA4, LA5, SOL5, FA5, MI5, DO5, MI5, RE5, DO5, SI4, SI4, LA4, RE5,
+        MI5, DO5, LA4, LA4};
 
 /** 
  * @brief Tetris melody durations in miliseconds.
@@ -107,3 +107,96 @@ const melody_t scale_melody = {.p_name = "scale",
                                .p_notes = (double *)scale_melody_notes,
                                .p_durations = (uint16_t *)scale_melody_durations,
                                .melody_length = SCALE_MELODY_LENGTH};
+
+// Megalovania Melody
+#define MEGALOVANIA_MELODY_LENGTH 19   /*!< Megalovania melody length */
+
+/**
+ * @brief Megalovania melody notes.
+ *
+ * This array contains the frequencies of the notes for the megalovania song.
+ * The notes are defined as frequency values in Hertz, and they are arranged in the order they are played in the song.
+ */
+static const double megalovania_melody_notes[MEGALOVANIA_MELODY_LENGTH] = {
+    RE3, RE3, RE4, LA3, SOLs3, SOL3, FA3, RE3,
+    FA3, SOL3, DO3, DO3, RE4, LA3, SOLs3, SOL3,
+    FA3, RE3, FA3,
+};
+
+/**
+ * @brief Megalovania melody durations in miliseconds.
+ * 
+ * This array contains the duration of each note in the megalovania song.
+ * The durations are defined in milliseconds, and they are arranged in the order they are played in the song.
+ */
+static const uint16_t megalovania_melody_durations[MEGALOVANIA_MELODY_LENGTH] = {
+    250, 250, 250, 250, 250, 250, 250, 250,
+    250, 250, 250, 250, 250, 250, 250, 250,
+    250, 250, 250
+};
+
+/**
+ * @brief Megalovania melody struct.
+ * 
+ * This struct contains the information of the megalovania melody.
+ * It is used to play the melody using the buzzer.
+ */
+const melody_t megalovania_melody = {.p_name = "megalovania",
+                                    .p_notes = (double *)megalovania_melody_notes,
+                                    .p_durations = (uint16_t *)megalovania_melody_durations,
+                                    .melody_length = MEGALOVANIA_MELODY_LENGTH};
+
+// Megalovania Melody
+#define ESPANA_MELODY_LENGTH 99   /*!< Megalovania melody length */
+
+/**
+ * @brief Megalovania melody notes.
+ *
+ * This array contains the frequencies of the notes for the megalovania song.
+ * The notes are defined as frequency values in Hertz, and they are arranged in the order they are played in the song.
+ */
+static const double espana_melody_notes[ESPANA_MELODY_LENGTH] = {
+    LA4, SI4, DO5, DO5, DO5, SI4, LA4, SOL4, FA4, MI4, 
+    RE4, RE4, RE4, MI4, FA4, SOL4, LA4, LA4, LA4, SOL4, 
+    FA4, MI4, RE4, RE4, MI4, FA4, SOL4, LA4, SOL4, FA4, 
+    MI4, RE4, MI4, FA4, SOL4, LA4, LA4, LA4, LA4, SI4, DO5, 
+    DO5, DO5, DO5, DO5, RE5, MI5, DO5, RE5, MI5, FA5, MI5, 
+    RE5, DO5, LA4, SOL4, LA4, SI4, DO5, DO5, DO5, DO5, DO5, 
+    RE5, MI5, DO5, RE5, MI5, FA5, MI5, RE5, DO5, LA4, SOL4, 
+    LA4, SI4, LA4, LA4, LA4, LA4, SI4, DO5, DO5, DO5, DO5, 
+    DO5, RE5, MI5, DO5, RE5, MI5, FA5, MI5, RE5, DO5, LA4, 
+    SOL4, LA4, SI4
+};
+
+/**
+ * @brief Megalovania melody durations in miliseconds.
+ * 
+ * This array contains the duration of each note in the megalovania song.
+ * The durations are defined in milliseconds, and they are arranged in the order they are played in the song.
+ */
+static const uint16_t espana_melody_durations[ESPANA_MELODY_LENGTH] = {
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500, 500, 500, 500, 500, 500,
+    500, 500, 500,
+};
+
+/**
+ * @brief Megalovania melody struct.
+ * 
+ * This struct contains the information of the megalovania melody.
+ * It is used to play the melody using the buzzer.
+ */
+const melody_t espana_melody = {.p_name = "espana",
+                                    .p_notes = (double *)espana_melody_notes,
+                                    .p_durations = (uint16_t *)espana_melody_durations,
+                                    .melody_length = ESPANA_MELODY_LENGTH};
