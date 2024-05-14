@@ -91,11 +91,11 @@ int main(void)
 
                     if (counter % 2 == 0)
                     {
-                        fsm_buzzer_set_melody(p_fsm_buzzer, &scale_melody);
+                        fsm_buzzer_set_melody(p_fsm_buzzer, &megalovania_melody);
                     }
                     else
                     {
-                        fsm_buzzer_set_melody(p_fsm_buzzer, &tetris_melody);
+                        fsm_buzzer_set_melody(p_fsm_buzzer, &scale_melody);
                     }
                     printf("Playing: %s\n", (((fsm_buzzer_t *)(p_fsm_buzzer))->p_melody)->p_name);
                     counter++;
