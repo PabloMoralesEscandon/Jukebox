@@ -83,7 +83,7 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
 
 void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
     fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, STOP);
-    p_fsm_jukebox->melody_idx+=1;
+    (p_fsm_jukebox->melody_idx) +=1;
     if((p_fsm_jukebox->melody_idx >= MELODIES_MEMORY_SIZE) ||
     (p_fsm_jukebox->melodies[p_fsm_jukebox->melody_idx].melody_length <= 0)){
         p_fsm_jukebox->melody_idx = 0;
@@ -144,7 +144,8 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
 
 static bool check_on(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
-    return (fsm_button_get_duration(p_fsm->p_fsm_button) > 0) && (fsm_button_get_duration(p_fsm->p_fsm_button) > p_fsm->on_off_press_time_ms);
+    uint32_t duration = fsm_button_get_duration(p_fsm->p_fsm_button);
+    return ((duration > 0) && (duration > (p_fsm->on_off_press_time_ms)));
 }
 
 static bool check_off(fsm_t * p_this){
@@ -196,8 +197,8 @@ static void do_start_up(fsm_t * p_this){
 
 static void do_start_jukebox(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
-    p_fsm->melody_idx = 0;
-    p_fsm->p_melody = scale_melody.p_name;
+    (p_fsm->melody_idx) = 0;
+    (p_fsm->p_melody) = (p_fsm->melodies[0]).p_name;
 }
 
 static void do_stop_jukebox(fsm_t * p_this){
@@ -245,7 +246,7 @@ static void do_sleep_while_on(fsm_t * p_this){
     port_system_sleep();
 }
 
-static fsm_trans_t fsm_trans_usart[] = {
+static fsm_trans_t fsm_trans_jukebox[] = {
     {OFF, check_no_activity, SLEEP_WHILE_OFF, do_sleep_off},
     {SLEEP_WHILE_OFF, check_no_activity, SLEEP_WHILE_OFF, do_sleep_while_off},
     {SLEEP_WHILE_OFF, check_activity, OFF, NULL},
@@ -271,7 +272,7 @@ fsm_t *fsm_jukebox_new(fsm_t *p_fsm_button, uint32_t on_off_press_time_ms, fsm_t
 }
 
 void fsm_jukebox_init(fsm_t *p_this, fsm_t *p_fsm_button, uint32_t on_off_press_time_ms, fsm_t *p_fsm_usart, fsm_t *p_fsm_buzzer, uint32_t next_song_press_time_ms){
-    fsm_init(p_this, fsm_trans_usart);
+    fsm_init(p_this, fsm_trans_jukebox);
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     p_fsm->p_fsm_button = p_fsm_button;
     p_fsm->on_off_press_time_ms = on_off_press_time_ms;
