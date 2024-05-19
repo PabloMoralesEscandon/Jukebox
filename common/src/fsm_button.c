@@ -86,6 +86,14 @@ void fsm_button_init(fsm_t *p_this, uint32_t debounce_time, uint32_t button_id){
     port_button_init(button_id);
 }
 
+bool fsm_button_check_activity 	(fsm_t *p_this) 
+{
+    fsm_button_t *p_fsm = (fsm_button_t *)(p_this);
+    return (p_fsm->f).current_state!=BUTTON_RELEASED;
+}
+
+
+
 /* Other auxiliary functions */
 
 fsm_t *fsm_button_new(uint32_t debounce_time, uint32_t button_id){

@@ -140,3 +140,8 @@ void fsm_usart_enable_tx_interrupt(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
     port_usart_enable_tx_interrupt(p_fsm->usart_id);
 }
+
+bool fsm_usart_check_activity(fsm_t *p_this){
+    fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
+    return ((p_fsm->f).current_state==SEND_DATA)||(p_fsm->data_received);
+}

@@ -66,4 +66,7 @@ void fsm_button_reset_duration(fsm_t *p_this);
 /// @return true if active, false if not
 bool fsm_button_check_activity(fsm_t *p_this);
 
+
+
+
 #endif /*FSM_BUTTON_H_*/

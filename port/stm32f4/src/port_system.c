@@ -296,6 +296,6 @@ void port_system_power_sleep(){
 
 void port_system_sleep(void){
   port_system_systick_suspend(); // Call function to stop systick
-  port_system_power_stop(); // Call function to lower consumption
+  port_system_power_sleep(); // Call function to lower consumption
 }
 
