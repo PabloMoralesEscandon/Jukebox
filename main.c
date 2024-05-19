@@ -62,6 +62,12 @@ int main(void)
         fsm_fire(p_fsm_user_usart);
         fsm_fire(p_fsm_user_buzzer);
         fsm_fire(p_fsm_user_jukebox);
+        if(usart_arr[0].p_usart -> CR1 & USART_CR1_RXNEIE){
+            printf("Rx enabled\n");
+        }
+        if(usart_arr[0].p_usart -> CR1 & USART_CR1_TXEIE){
+            printf("Tx enable\n");
+        }
 
     } // End of while(1)
     // Nunca deberíamos llegar aquí

@@ -128,6 +128,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
             return;
         }
         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Melody not found :(\n");
+        printf("Error: Melody not found :(\n");
         return;
     }
     if(!strcmp(p_command,"info")){
@@ -137,6 +138,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         return;
     }
     fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
+    printf("Error: Command not found :(\n");
     return;
 }
 
@@ -159,6 +161,10 @@ static bool check_melody_finished(fsm_t * p_this){
 
 static bool check_command_received(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
+    if(fsm_usart_check_data_received(p_fsm->p_fsm_usart)){
+        printf("Command received\n");
+    }
+    
     return fsm_usart_check_data_received(p_fsm->p_fsm_usart);
 }
 
