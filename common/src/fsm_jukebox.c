@@ -179,9 +179,9 @@ static bool check_next_song_button(fsm_t * p_this){
 static bool check_activity(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     return (
-        fsm_button_check_activity(p_fsm->p_fsm_button) ||
-        fsm_usart_check_activity(p_fsm->p_fsm_usart) ||
-        fsm_buzzer_check_activity(p_fsm->p_fsm_buzzer)
+        (fsm_button_check_activity(p_fsm->p_fsm_button)) ||
+        (fsm_usart_check_activity(p_fsm->p_fsm_usart)) ||
+        (fsm_buzzer_check_activity(p_fsm->p_fsm_buzzer))
     );
 }
 
@@ -204,7 +204,7 @@ static void do_start_up(fsm_t * p_this){
 static void do_start_jukebox(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     (p_fsm->melody_idx) = 0;
-    (p_fsm->p_melody) = (p_fsm->melodies[0]).p_name;
+    (p_fsm->p_melody) = ((p_fsm->melodies[0]).p_name);
 }
 
 static void do_stop_jukebox(fsm_t * p_this){
@@ -241,7 +241,7 @@ static void do_sleep_off(fsm_t * p_this){
 }
 
 static void do_sleep_wait_command(fsm_t * p_this){
-    port_system_sleep();
+    // port_system_sleep();
 }
 
 static void do_sleep_while_off(fsm_t * p_this){

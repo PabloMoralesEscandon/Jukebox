@@ -112,7 +112,7 @@ void fsm_usart_init(fsm_t *p_this, uint32_t usart_id){
 
 bool fsm_usart_check_data_received(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
-    return p_fsm->data_received;
+    return (p_fsm->data_received);
 }
 
 void fsm_usart_reset_input_data(fsm_t *p_this){
@@ -143,5 +143,5 @@ void fsm_usart_enable_tx_interrupt(fsm_t *p_this){
 
 bool fsm_usart_check_activity(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
-    return ((p_fsm->f).current_state==SEND_DATA)||(p_fsm->data_received);
+    return ((((p_fsm->f).current_state)==SEND_DATA)||(p_fsm->data_received));
 }
