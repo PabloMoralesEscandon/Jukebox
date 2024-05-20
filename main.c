@@ -32,6 +32,8 @@
 
 #include "fsm_jukebox.h"
 
+#include "LCD1602.h"
+
 /* Defines ------------------------------------------------------------------*/
 
 #define ON_OFF_PRESS_TIME_MS 1000
@@ -44,8 +46,7 @@
  */
 int main(void)
 {
-    /* Init board */
-    port_system_init();
+    /* Init board */    port_system_init();
 
     fsm_t* p_fsm_user_button = fsm_button_new(BUTTON_0_DEBOUNCE_TIME_MS, BUTTON_0_ID);
 
@@ -55,6 +56,11 @@ int main(void)
 
     fsm_t* p_fsm_user_jukebox = fsm_jukebox_new(p_fsm_user_button, ON_OFF_PRESS_TIME_MS, p_fsm_user_usart, p_fsm_user_buzzer, NEXT_SONG_BUTTON_TIME_MS);
 
+    // lcd_init();
+
+    // lcd_put_cur(0, 0);
+    // lcd_send_string("Jukebox");
+
     /* Infinite loop */
     while (1)
     {
@@ -62,12 +68,6 @@ int main(void)
         fsm_fire(p_fsm_user_usart);
         fsm_fire(p_fsm_user_buzzer);
         fsm_fire(p_fsm_user_jukebox);
-        if(usart_arr[0].p_usart -> CR1 & USART_CR1_RXNEIE){
-            printf("Rx enabled\n");
-        }
-        if(usart_arr[0].p_usart -> CR1 & USART_CR1_TXEIE){
-            printf("Tx enable\n");
-        }
 
     } // End of while(1)
     // Nunca deberíamos llegar aquí

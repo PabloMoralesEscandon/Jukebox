@@ -15,6 +15,7 @@
 #include "port_button.h"
 #include "port_usart.h"
 #include "port_buzzer.h"
+#include "port_receiver.h"
 
 /**
  * @brief Interrupt service routine for the System tick timer (SysTick).
@@ -35,6 +36,12 @@ void EXTI15_10_IRQHandler(void){
     buttons_arr[BUTTON_0_ID].flag_pressed = !port_system_gpio_read(buttons_arr[BUTTON_0_ID].p_port, buttons_arr[BUTTON_0_ID].pin);
     EXTI->PR |= BIT_POS_TO_MASK(buttons_arr[BUTTON_0_ID].pin);
   }
+  /* ISR user receiver */
+  // if ( EXTI->PR & BIT_POS_TO_MASK(receivers_arr[receiver_0_ID].pin)){
+  //   port_system_systick_resume();
+  //   receivers_arr[BUTTON_0_ID].flag_pressed = !port_system_gpio_read(buttons_arr[BUTTON_0_ID].p_port, buttons_arr[BUTTON_0_ID].pin);
+  //   EXTI->PR |= BIT_POS_TO_MASK(buttons_arr[BUTTON_0_ID].pin);
+  // }
 }
 
 /// @brief Handles UART3 interrupts
