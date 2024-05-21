@@ -139,6 +139,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     }
     fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
     printf("Error: Command not found :(\n");
+    fsm_usart_reset_input_data(p_fsm_jukebox->p_fsm_usart);
     return;
 }
 
@@ -241,7 +242,7 @@ static void do_sleep_off(fsm_t * p_this){
 }
 
 static void do_sleep_wait_command(fsm_t * p_this){
-    // port_system_sleep();
+    port_system_sleep();
 }
 
 static void do_sleep_while_off(fsm_t * p_this){
