@@ -42,7 +42,7 @@ port_motor_hw_t motors_arr[] = {
 //   if (motor_id == MOTOR_0_ID)
 //   {
 //     // Enable the timer clock
-//     RCC->APB1ENR |= RCC_APB1ENR_TIM2EN;
+//     RCC->APB2ENR |= RCC_APB2ENR_TIM2EN;
 //     // Set clock source to internal
 //     TIM2->CR1 &= ~TIM_CR1_CEN;
 //     // Set counter to 0
@@ -65,7 +65,7 @@ static void _timer_pwm_setup(uint32_t motor_id){
   if (motor_id == MOTOR_0_ID)
   {
     // Enable the timer clock
-    RCC->APB1ENR |= RCC_APB1ENR_TIM9EN;
+    RCC->APB2ENR |= RCC_APB2ENR_TIM9EN;
     // Set clock source to internal
     TIM9->CR1 &= ~TIM_CR1_CEN;
     // Enable autoreload preload
