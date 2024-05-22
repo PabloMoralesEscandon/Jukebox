@@ -146,7 +146,7 @@ void port_motor_init(uint32_t motor_id)
 //   }
 // }
 
-bool port_motor_get_note_timeout(uint32_t motor_id){
+bool port_motor_get_timeout(uint32_t motor_id){
   return motors_arr[motor_id].rot_end;
 }
 
