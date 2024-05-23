@@ -242,7 +242,7 @@ static void do_sleep_off(fsm_t * p_this){
 }
 
 static void do_sleep_wait_command(fsm_t * p_this){
-    port_system_sleep();
+    // port_system_sleep();
 }
 
 static void do_sleep_while_off(fsm_t * p_this){

@@ -16,6 +16,7 @@
 
 /* HW dependent includes */
 #include "stm32f4xx.h"
+#include <stm32f4xx_hal.h>
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Defines */
@@ -42,7 +43,9 @@
 #define GPIO_MODE_IN 0x00        /*!< GPIO as input */
 #define GPIO_MODE_OUT 0x01       /*!< GPIO as output */
 #define GPIO_MODE_ALTERNATE 0x02 /*!< GPIO as alternate function */
+#ifndef GPIO_MODE_ANALOG
 #define GPIO_MODE_ANALOG 0x03    /*!< GPIO as analog */
+#endif
 
 #define GPIO_PUPDR_NOPULL 0x00 /*!< GPIO no pull up or down */
 #define GPIO_PUPDR_PUP 0x01    /*!< GPIO pull up */
@@ -54,6 +57,22 @@
 #define TRIGGER_BOTH_EDGE (TRIGGER_RISING_EDGE | TRIGGER_FALLING_EDGE) /*!< Interrupt mask for detecting both rising and falling edges */
 #define TRIGGER_ENABLE_EVENT_REQ 0x04U                                 /*!< Interrupt mask to enable event requests */
 #define TRIGGER_ENABLE_INTERR_REQ 0x08U                                /*!< Interrupt mask to enable interrupt request */
+
+/* HAL Defines --------------------------------------------------------------*/
+#define B1_Pin GPIO_PIN_13
+#define B1_GPIO_Port GPIOC
+#define USART_TX_Pin GPIO_PIN_2
+#define USART_TX_GPIO_Port GPIOA
+#define USART_RX_Pin GPIO_PIN_3
+#define USART_RX_GPIO_Port GPIOA
+#define LD2_Pin GPIO_PIN_5
+#define LD2_GPIO_Port GPIOA
+#define TMS_Pin GPIO_PIN_13
+#define TMS_GPIO_Port GPIOA
+#define TCK_Pin GPIO_PIN_14
+#define TCK_GPIO_Port GPIOA
+#define SWO_Pin GPIO_PIN_3
+#define SWO_GPIO_Port GPIOB
 
 /* Function prototypes and explanation -------------------------------------------------*/
 

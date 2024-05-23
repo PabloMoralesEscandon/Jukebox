@@ -15,6 +15,7 @@
 #include "port_button.h"
 #include "port_usart.h"
 #include "port_buzzer.h"
+#include "port_nec.h"
 
 /**
  * @brief Interrupt service routine for the System tick timer (SysTick).
@@ -24,6 +25,7 @@
  */
 void SysTick_Handler(void){
   port_system_set_millis(port_system_get_millis() + 1);
+  HAL_IncTick();
 }
 
 /// @brief Handles Px10 to Px15 interrupts
@@ -34,6 +36,16 @@ void EXTI15_10_IRQHandler(void){
     port_system_systick_resume();
     buttons_arr[BUTTON_0_ID].flag_pressed = !port_system_gpio_read(buttons_arr[BUTTON_0_ID].p_port, buttons_arr[BUTTON_0_ID].pin);
     EXTI->PR |= BIT_POS_TO_MASK(buttons_arr[BUTTON_0_ID].pin);
+  }
+  /* ISR NEC */
+  if ( EXTI->PR & BIT_POS_TO_MASK(NECs_arr[NEC_0_ID].pin)){
+    port_system_systick_resume();
+    if(NECs_arr[NEC_0_ID].decode && NECs_arr[NEC_0_ID].event){
+      port_NEC_decode(NEC_0_ID);
+    } else{
+      NECs_arr[NEC_0_ID].event = true;
+    }
+    EXTI->PR |= BIT_POS_TO_MASK(NECs_arr[NEC_0_ID].pin);
   }
 }
 
@@ -55,4 +67,9 @@ void TIM2_IRQHandler(void){
   // Clear the update interrupt flag
   TIM2->SR = ~TIM_SR_UIF;
   buzzers_arr[0].note_end = true;
+}
+
+void TIM4_IRQHandler(void){
+  // Clear the update interrupt flag
+  TIM4->SR = ~TIM_SR_UIF;
 }
