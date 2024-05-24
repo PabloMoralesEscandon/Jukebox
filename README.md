@@ -139,6 +139,8 @@ Para la versión 5 hemos decidido implementar las siguientes mejoras:
 7. Implementación de un módulo de comunicaciones IR por NEC
 8. Uso de una caja impresa en 3D para contener a la placa
 
+[![Watch the video](docs/assets/imgs/videopic.png)](https://drive.google.com/file/d/1XYyCRyrfDIM2grjUL5z0DJl6GyRoR_LI/view?usp=sharing)
+
 ### Pantalla LCD
 Implementada una pantalla LCD haciendo uso de un chip de interfaz I2C. Esta implementación se ha realizado a través de la HAL que requiere de extensivas configuraciones para funcionar adecuadamente junto al resto de implementaciones. Además del funcionamiento de la placa se ha integrado con el resto de sistemas haciendo que realice funciones como mostrar la canción que se está reproduciendo.
 
