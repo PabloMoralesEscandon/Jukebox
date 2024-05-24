@@ -83,6 +83,35 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
     }
     return true;
 }
+void _send(fsm_t *p_fsm_usart, char* message){
+    printf(message);
+    fsm_usart_set_out_data(p_fsm_usart, message);
+
+}
+
+
+void _show_song(char* song_name){
+    port_lcd_clear();
+    port_lcd_set_cursor(0,0);
+    port_lcd_print_str("NOW PLAYING:");
+    port_lcd_set_cursor(0,1);
+    port_lcd_print_str(song_name);
+}
+
+void _show_state(char* state){
+    port_lcd_clear();
+    port_lcd_set_cursor(0,0);
+    port_lcd_print_str(state);
+}
+
+void _show_vol(char* volume){
+    port_lcd_clear();
+    port_lcd_set_cursor(0,0);
+    port_lcd_print_str("VOLUME:");
+    port_lcd_set_cursor(0,1);
+    port_lcd_print_str(volume);
+    port_lcd_print_str("%");
+}
 
 static uint32_t _random(uint32_t min, uint32_t max){
    return (uint32_t)min + rand() / (RAND_MAX / (max - min + 1) + 1);
