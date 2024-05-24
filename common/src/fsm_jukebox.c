@@ -291,5 +291,7 @@ void fsm_jukebox_init(fsm_t *p_this, fsm_t *p_fsm_button, uint32_t on_off_press_
     p_fsm->melodies[1] = happy_birthday_melody;
     p_fsm->melodies[2] = tetris_melody;
     p_fsm->melodies[3] = megalovania_melody;
+    p_fsm->melodies[4] = sailor_melody;
+    p_fsm->melodies[5] = WII_melody;
 }
 
