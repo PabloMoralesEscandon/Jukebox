@@ -211,16 +211,18 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     }
     if(p_fsm_jukebox->game_state==GAMING) {
         char msg[USART_OUTPUT_BUFFER_LENGTH];
-
         if(!strcmp(p_command,p_fsm_jukebox->p_melody)){
-
-            sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
+            sprintf(msg, "The correct answer was %s\n", p_fsm_jukebox->p_melody);
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+            sprintf(msg, "So your guess is correct! :)\n");
             fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
             p_fsm_jukebox->game_state=GAMING;
             return;
         } else{
-            sprintf(msg, "The correct answer was %s\nSo you have lost as the guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+            sprintf(msg, "The correct answer was %s\n", p_fsm_jukebox->p_melody);
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+            sprintf(msg, "So your guess is incorrect! :(\n");
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
             sprintf(msg, "Remember you can give up at any time with the command <<GIVE UP>>\n");
             fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
             return;
@@ -229,8 +231,11 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
         p_fsm_jukebox->game_state=WAITING;
         char msg[USART_OUTPUT_BUFFER_LENGTH];
-        sprintf(msg, "The correct answer was %s\n My disappointment is immeasurable and my day is ruined :(\n", p_fsm_jukebox->p_melody);
-        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg); 
+        sprintf(msg, "The correct answer was %s\n", p_fsm_jukebox->p_melody);
+        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+        sprintf(msg, "Im dissapointed in you for not keeping on trying :(\n");
+        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+
         return;
     }
 
