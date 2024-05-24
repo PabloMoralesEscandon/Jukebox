@@ -11,9 +11,7 @@ Desarrollo de un programa capaz de reproducir melodías almacenadas en memoria u
 
 **Montaje actual:**
 
-![Montaje de la V2](docs/assets/imgs/montajeV2.png)
-
-Por ahora unicamente es capaz de recibir y enviar información por la interfaz UART y de detectar pulsaciones del botón de usuario.
+![Montaje de la V5](docs/assets/imgs/montajeV5.png)
 
 
 
@@ -99,6 +97,7 @@ Desarrollo del código para la implementación del modo de bajo consumo y la int
 
 - Se crea la jukebox como elemento central del sistema a través del cual se gestionan todos los demás componentes.
 - Se hace uso de una máquina de estados (FSM) para contolar el estado de la jukebox.
+- Se agrega un modo de bajo consumo que se activa cuando la placa se encuentra inactiva
 - Se implementan diferentes comandos para la interacción con la jukebox por medio de la interfaz USART
     1. Play: Comienza o continua la reproducción de la canción seleccionada
     2. Stop: Detiene la reproducción de la canción seleccionada
@@ -123,7 +122,46 @@ Desarrollo del código específico a la placa.
 * [port_jukebox.h](port__jukebox_8h.html).
 * [port_jukebox.c](port__jukebox_8c.html).
 
+#### Demonstración comunicación módulo 4
+Hemos realizado la medida solicitada en el laboratorio con el osciloscopio correspondiente a una comunicación entre el ordenador y la jukebox al utilizar el comando "info"
+
+![RespuestaJukebox](docs/assets/imgs/capturaOsculoscopioV4.png)
+
 
 ## Version 5
-**WIP**
+Para la versión 5 hemos decidido implementar las siguientes mejoras:
+1. Implementación de una pantalla LCD
+2. Modalidad de juego de adivinar canciones
+3. Adición de nuevas canciones obtenidas a través del script de python [tonedelay.py] que se puede encontrar en la carpeta docs
+4. Funciones de visualización simultánea por terminal de comandos y Usart
+5. Una canción de despedida al apagar la placa
+6. Posibilidad de ajustar el volumen de la reproducción
+7. Implementación de un módulo de comunicaciones IR por NEC
+8. Uso de una caja impresa en 3D para contener a la placa
+
+### Pantalla LCD
+Implementada una pantalla LCD haciendo uso de un chip de interfaz I2C. Esta implementación se ha realizado a través de la HAL que requiere de extensivas configuraciones para funcionar adecuadamente junto al resto de implementaciones. Además del funcionamiento de la placa se ha integrado con el resto de sistemas haciendo que realice funciones como mostrar la canción que se está reproduciendo.
+
+### Juego de adivinar canciones
+Implementado un juego de adivinar canciones en el que tras utilizar el comando "game" por la comunicación USART la placa elegirá una canción de forma aleatoria, habilitará el estado de juego y comenzará a reproducirla. En este estado de juego habilitado el sistema reconocerá que has acertado la canción al enviar el nombre de la canción por la USART. Además existe la posibilidad de usar el comando "give up" para detener el juego sin haber acertado la canción
+
+### Adición de nuevas canciones
+Para facilitar y habilitar la implementación de nuevas canciones hemos hecho uso de un script de python que puede convertir canciones en formato .ino en los arrays de tonos y duraciones y la longitud de los mismos para su integración en nuestro sistema
+
+### Funciones de visualización simultánea por terminal de comandos y Usart
+Con el motivo de incrementar la robustez del sistema frente a problemas con la comunicación USART se han implementado funciones que envían la información de forma simultánea a través de diferentes canales para garantizar que llegue al usuario
+
+### Canción de despedida
+Se ha implementado una canción de despedida en el sistema que se activa cuando se apaga la placa. Para esto se ha tenido que modificar la estructura de la maquina de estados de jukebox agregando un estado equivalente a START UP resultando en que se usen dos estados diferentes para el apagado del sistema.
+
+### Volumen de reproducción
+Se ha añadido la posibilidad de ajustar el volumen del buzzer, para esto se han realizado cambios en el código a nivel de port modificando el ciclo de trabajo de las señales PWM que se utilizan para hacer sonar al buzzer, resultando estos cambios de ciclo de trabajo en la variación de volumen
+
+### Módulo de comunicaciones IR por NEC
+Se ha implementado y codificado las librerías para establecer comunicaciones entre un mando a distancia con un módulo receptor NEC del sistema. Esta implementación se ha realizado haciendo uso de una máquina de estados que trabaja con las diferentes fases requeridas para entablar una comunicación NEC. Actualmente el módulo no se encuentra funcional porque el voltaje que genera la recepción no llega a ser suficiente para excitar los pines de la placa en la mayoría de los casos.
+
+### Caja impresa en 3D
+Como se ve en la imagen hemos impreso una caja para albergar la placa de forma segura, esta sigue permitiendo cómodo acceso a los pines además de los botones tanto el de usuario como el de reinicio ![Montaje de la V5](docs/assets/imgs/montajeV5.png)
+
+
 
