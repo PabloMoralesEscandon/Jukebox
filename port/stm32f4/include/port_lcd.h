@@ -41,48 +41,113 @@
 #define LCD_5x10DOTS 0x04
 #define LCD_5x8DOTS 0x00
 
-/* Backlight */
+/// @brief Backlight on bit
 #define LCD_BACKLIGHT 0x08
+
+/// @brief Backlight off bit
 #define LCD_NOBACKLIGHT 0x00
 
-/* Enable Bit */
+/// @brief Enable Bit
 #define ENABLE 0x04
 
-/* Read Write Bit */
+/// @brief Read Write Bit
 #define RW 0x0
 
-/* Register Select Bit */
+/// @brief Register Select Bit
 #define RS 0x01
 
-/* Device I2C Address */
+/// @brief I2C address shifted one bit to the left as a 7 bit address is expected
 #define DEVICE_ADDR     (0x27 << 1)
 
-void HD44780_Init(uint8_t rows);
-void HD44780_Clear();
-void HD44780_Home();
-void HD44780_NoDisplay();
-void HD44780_Display();
-void HD44780_NoBlink();
-void HD44780_Blink();
-void HD44780_NoCursor();
-void HD44780_Cursor();
-void HD44780_ScrollDisplayLeft();
-void HD44780_ScrollDisplayRight();
-void HD44780_PrintLeft();
-void HD44780_PrintRight();
-void HD44780_LeftToRight();
-void HD44780_RightToLeft();
-void HD44780_ShiftIncrement();
-void HD44780_ShiftDecrement();
-void HD44780_NoBacklight();
-void HD44780_Backlight();
-void HD44780_AutoScroll();
-void HD44780_NoAutoScroll();
-void HD44780_CreateSpecialChar(uint8_t, uint8_t[]);
-void HD44780_PrintSpecialChar(uint8_t);
-void HD44780_SetCursor(uint8_t, uint8_t);
-void HD44780_SetBacklight(uint8_t new_val);
-void HD44780_LoadCustomCharacter(uint8_t char_num, uint8_t *rows);
-void HD44780_PrintStr(const char[]);
+/// @brief 
+/// @param rows 
+void port_lcd_init(uint8_t rows);
+
+/// @brief 
+void port_lcd_clear();
+
+/// @brief 
+void port_lcd_home();
+
+/// @brief 
+void port_lcd_no_display();
+
+/// @brief 
+void port_lcd_display();
+
+/// @brief 
+void port_lcd_no_blink();
+
+/// @brief 
+void port_lcd_blink();
+
+/// @brief 
+void port_lcd_no_cursor();
+
+/// @brief 
+void port_lcd_cursor();
+
+/// @brief 
+void port_lcd_scroll_display_left();
+
+/// @brief 
+void port_lcd_scroll_display_right();
+
+/// @brief 
+void port_lcd_print_left();
+
+/// @brief 
+void port_lcd_print_right();
+
+/// @brief 
+void port_lcd_left_to_right();
+
+/// @brief 
+void port_lcd_right_to_left();
+
+/// @brief 
+void port_lcd_shift_increment();
+
+/// @brief 
+void port_lcd_shift_decrement();
+
+/// @brief 
+void port_lcd_no_backlight();
+
+/// @brief 
+void port_lcd_backlight();
+
+/// @brief 
+void port_lcd_autoscroll();
+
+/// @brief 
+void port_lcd_no_autoscroll();
+
+/// @brief 
+/// @param  
+/// @param  
+void port_lcd_create_special_char(uint8_t, uint8_t[]);
+
+/// @brief 
+/// @param  
+void port_lcd_print_special_char(uint8_t);
+
+/// @brief 
+/// @param  
+/// @param  
+void port_lcd_set_cursor(uint8_t, uint8_t);
+
+/// @brief 
+/// @param new_val 
+void port_lcd_set_backlight(uint8_t new_val);
+
+/// @brief 
+/// @param char_num 
+/// @param rows 
+void port_lcd_load_custom_character(uint8_t char_num, uint8_t *rows);
+
+/// @brief 
+/// @param  
+void port_lcd_print_str(const char[]);
 
 #endif /* LIQUIDCRYSTAL_I2C_H_ */

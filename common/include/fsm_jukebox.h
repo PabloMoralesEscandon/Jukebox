@@ -47,6 +47,7 @@ typedef struct{
     fsm_t *p_fsm_buzzer;
     uint32_t next_song_press_time_ms;
     double speed;
+    double volume;
 } fsm_jukebox_t;
 
 /* Function prototypes and explanation ---------------------------------------*/

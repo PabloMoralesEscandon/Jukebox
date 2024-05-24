@@ -46,6 +46,7 @@ typedef struct{
     uint8_t 	buzzer_id;      /*!< Used buzzer ID */
     uint8_t 	user_action;    /*!< Current User Action */
     double player_speed;        /*!< Reproduction Speed */
+    double player_volume;     /*!< Current volume */
 
 } fsm_buzzer_t;
 

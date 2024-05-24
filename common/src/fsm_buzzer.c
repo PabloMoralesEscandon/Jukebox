@@ -21,7 +21,7 @@ static void _start_note 	(fsm_t *p_this, double freq, uint32_t duration){
     fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
 
     duration = (uint32_t)((double)duration/p_fsm->player_speed);
-    port_buzzer_set_note_frequency(p_fsm->buzzer_id, freq);
+    port_buzzer_set_note_frequency(p_fsm->buzzer_id, freq, p_fsm->player_volume);
     port_buzzer_set_note_duration(p_fsm->buzzer_id, duration);
 }
 
@@ -157,6 +157,7 @@ void fsm_buzzer_init(fsm_t *p_this, uint32_t buzzer_id){
     p_fsm->note_index = 0;
     p_fsm->user_action = 0;
     p_fsm->player_speed = 1.0;
+    p_fsm->player_speed = 1.0;
     port_buzzer_init(buzzer_id);
 
 
@@ -181,6 +182,10 @@ void fsm_buzzer_set_action(fsm_t *p_this, uint8_t action){
     if(action==0) p_fsm->note_index=0;
 }
 
+void fsm_buzzer_set_speed(fsm_t *p_this, double volume){
+    fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
+    p_fsm->player_volume = volume;
+}
 
 uint8_t fsm_buzzer_get_action(fsm_t *p_this){
     fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);

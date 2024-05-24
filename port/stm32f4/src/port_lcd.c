@@ -39,7 +39,7 @@ uint8_t special2[8] = {
         0b00000
 };
 
-void HD44780_Init(uint8_t rows)
+void port_lcd_init(uint8_t rows)
 {
   dpRows = rows;
 
@@ -80,33 +80,33 @@ void HD44780_Init(uint8_t rows)
   SendCommand(LCD_FUNCTIONSET | dpFunction);
 
   dpControl = LCD_DISPLAYON | LCD_CURSOROFF | LCD_BLINKOFF;
-  HD44780_Display();
-  HD44780_Clear();
+  port_lcd_display();
+  port_lcd_clear();
 
   /* Display Mode */
   dpMode = LCD_ENTRYLEFT | LCD_ENTRYSHIFTDECREMENT;
   SendCommand(LCD_ENTRYMODESET | dpMode);
   DelayUS(4500);
 
-  HD44780_CreateSpecialChar(0, special1);
-  HD44780_CreateSpecialChar(1, special2);
+  port_lcd_create_special_char(0, special1);
+  port_lcd_create_special_char(1, special2);
 
-  HD44780_Home();
+  port_lcd_home();
 }
 
-void HD44780_Clear()
+void port_lcd_clear()
 {
   SendCommand(LCD_CLEARDISPLAY);
   DelayUS(2000);
 }
 
-void HD44780_Home()
+void port_lcd_home()
 {
   SendCommand(LCD_RETURNHOME);
   DelayUS(2000);
 }
 
-void HD44780_SetCursor(uint8_t col, uint8_t row)
+void port_lcd_set_cursor(uint8_t col, uint8_t row)
 {
   int row_offsets[] = { 0x00, 0x40, 0x14, 0x54 };
   if (row >= dpRows)
@@ -116,77 +116,77 @@ void HD44780_SetCursor(uint8_t col, uint8_t row)
   SendCommand(LCD_SETDDRAMADDR | (col + row_offsets[row]));
 }
 
-void HD44780_NoDisplay()
+void port_lcd_no_display()
 {
   dpControl &= ~LCD_DISPLAYON;
   SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
-void HD44780_Display()
+void port_lcd_display()
 {
   dpControl |= LCD_DISPLAYON;
   SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
-void HD44780_NoCursor()
+void port_lcd_no_cursor()
 {
   dpControl &= ~LCD_CURSORON;
   SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
-void HD44780_Cursor()
+void port_lcd_cursor()
 {
   dpControl |= LCD_CURSORON;
   SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
-void HD44780_NoBlink()
+void port_lcd_no_blink()
 {
   dpControl &= ~LCD_BLINKON;
   SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
-void HD44780_Blink()
+void port_lcd_blink()
 {
   dpControl |= LCD_BLINKON;
   SendCommand(LCD_DISPLAYCONTROL | dpControl);
 }
 
-void HD44780_ScrollDisplayLeft(void)
+void port_lcd_scroll_display_left(void)
 {
   SendCommand(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVELEFT);
 }
 
-void HD44780_ScrollDisplayRight(void)
+void port_lcd_scroll_display_right(void)
 {
   SendCommand(LCD_CURSORSHIFT | LCD_DISPLAYMOVE | LCD_MOVERIGHT);
 }
 
-void HD44780_LeftToRight(void)
+void port_lcd_left_to_right(void)
 {
   dpMode |= LCD_ENTRYLEFT;
   SendCommand(LCD_ENTRYMODESET | dpMode);
 }
 
-void HD44780_RightToLeft(void)
+void port_lcd_right_to_left(void)
 {
   dpMode &= ~LCD_ENTRYLEFT;
   SendCommand(LCD_ENTRYMODESET | dpMode);
 }
 
-void HD44780_AutoScroll(void)
+void port_lcd_autoscroll(void)
 {
   dpMode |= LCD_ENTRYSHIFTINCREMENT;
   SendCommand(LCD_ENTRYMODESET | dpMode);
 }
 
-void HD44780_NoAutoScroll(void)
+void port_lcd_no_autoscroll(void)
 {
   dpMode &= ~LCD_ENTRYSHIFTINCREMENT;
   SendCommand(LCD_ENTRYMODESET | dpMode);
 }
 
-void HD44780_CreateSpecialChar(uint8_t location, uint8_t charmap[])
+void port_lcd_create_special_char(uint8_t location, uint8_t charmap[])
 {
   location &= 0x7;
   SendCommand(LCD_SETCGRAMADDR | (location << 3));
@@ -196,34 +196,34 @@ void HD44780_CreateSpecialChar(uint8_t location, uint8_t charmap[])
   }
 }
 
-void HD44780_PrintSpecialChar(uint8_t index)
+void port_lcd_print_special_char(uint8_t index)
 {
   SendChar(index);
 }
 
-void HD44780_LoadCustomCharacter(uint8_t char_num, uint8_t *rows)
+void port_lcd_load_custom_character(uint8_t char_num, uint8_t *rows)
 {
-  HD44780_CreateSpecialChar(char_num, rows);
+  port_lcd_create_special_char(char_num, rows);
 }
 
-void HD44780_PrintStr(const char c[])
+void port_lcd_print_str(const char c[])
 {
   while(*c) SendChar(*c++);
 }
 
-void HD44780_SetBacklight(uint8_t new_val)
+void port_lcd_set_backlight(uint8_t new_val)
 {
-  if(new_val) HD44780_Backlight();
-  else HD44780_NoBacklight();
+  if(new_val) port_lcd_backlight();
+  else port_lcd_no_backlight();
 }
 
-void HD44780_NoBacklight(void)
+void port_lcd_no_backlight(void)
 {
   dpBacklight=LCD_NOBACKLIGHT;
   ExpanderWrite(0);
 }
 
-void HD44780_Backlight(void)
+void port_lcd_backlight(void)
 {
   dpBacklight=LCD_BACKLIGHT;
   ExpanderWrite(0);
