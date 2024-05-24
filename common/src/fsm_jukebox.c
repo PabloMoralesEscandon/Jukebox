@@ -84,34 +84,8 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
     return true;
 }
 
-void _send(fsm_t *p_fsm_usart, char* message){
-    printf(message);
-    fsm_usart_set_out_data(p_fsm_usart, message);
-
-}
-
-
-void _show_song(char* song_name){
-    port_lcd_clear();
-    port_lcd_set_cursor(0,0);
-    port_lcd_print_str("NOW PLAYING:");
-    port_lcd_set_cursor(0,1);
-    port_lcd_print_str(song_name);
-}
-
-void _show_state(char* state){
-    port_lcd_clear();
-    port_lcd_set_cursor(0,0);
-    port_lcd_print_str(state);
-}
-
-void _show_vol(char* volume){
-    port_lcd_clear();
-    port_lcd_set_cursor(0,0);
-    port_lcd_print_str("VOLUME:");
-    port_lcd_set_cursor(0,1);
-    port_lcd_print_str(volume);
-    port_lcd_print_str("%");
+static uint32_t _random(uint32_t min, uint32_t max){
+   return (uint32_t)min + rand() / (RAND_MAX / (max - min + 1) + 1);
 }
 
 void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
@@ -186,10 +160,83 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     if(!strcmp(p_command,"info")){
         char msg[USART_OUTPUT_BUFFER_LENGTH];
         sprintf(msg, "Playing: %s\n", p_fsm_jukebox->p_melody);
-        _send(p_fsm_jukebox->p_fsm_usart, msg);
+        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
         return;
     }
-    _send(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
+    if(!strcmp(p_command,"game")){
+        char msg[USART_OUTPUT_BUFFER_LENGTH];
+        sprintf(msg, "Gaming\n");
+        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+        uint32_t melody_selected = _random(0,3);
+        if(p_fsm_jukebox->melodies[melody_selected].melody_length > 0){
+            fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, STOP);
+            p_fsm_jukebox->melody_idx = melody_selected;
+            const melody_t* melody = &p_fsm_jukebox->melodies[p_fsm_jukebox->melody_idx];
+            fsm_buzzer_set_melody(p_fsm_jukebox->p_fsm_buzzer, melody);
+            p_fsm_jukebox->p_melody = p_fsm_jukebox->melodies[p_fsm_jukebox->melody_idx].p_name;
+            fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, PLAY);
+            p_fsm_jukebox->game_state = GAMING;
+            return;
+        }
+        
+        //Falta implementar todo el juego, usando este comando para 
+        //activarlo, tras iniciar el juego debería sonar un sonido 
+        //genérico de aviso y posteriormente comenzar una canción
+        //En cualquier momento tras el inicio de esta canción puedes
+        //usar el comando pick 1, 2 etc para hacer tu guess de qué
+        //canción se trata
+
+        //Cuando estemos jugando tendremos que tener algun flag levantado
+        //y guardar que cancion es la que ha tocado (o sacar la que está
+        //siendo reproducida como con el comando de info que tenemos ya 
+        //implementado). Si la acierta
+        return;
+    }
+    // if(!strcmp(p_command,"pick")){
+    //     char msg[USART_OUTPUT_BUFFER_LENGTH];
+    //     if(p_fsm_jukebox->game_state!=GAMING){
+    //         sprintf(msg, "Begin a guess game before trying to guess the song\n");
+    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+    //         return;
+    //     }
+        
+    //     sprintf(msg, "You have guessed%s\n",p_command);
+    //     fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+    //     bool check = !strcmp(p_param,p_fsm_jukebox->p_melody);
+    //     if(check) {
+    //         sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
+    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+    //     }else {
+    //         sprintf(msg, "The correct answer was %s\nSo your guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
+    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+    //     }
+
+    //     return;
+    // }
+    if(p_fsm_jukebox->game_state==GAMING) {
+        if(!strcmp(p_command,p_fsm_jukebox->p_melody)){
+
+            sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+            p_fsm_jukebox->game_state=GAMING;
+            return;
+        } else{
+            sprintf(msg, "The correct answer was %s\nSo you have lost as the guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+            sprintf(msg, "Remember you can give up at any time with the command <<GIVE UP>>\n");
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+            return;
+        }
+    }
+    if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
+        p_fsm_jukebox->game_state=WAITING;
+        sprintf(msg, "The correct answer was %s\n My disappointment is immeasurable and my day is ruined :(\n", p_fsm_jukebox->p_melody);
+        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg); 
+        return;
+    }
+
+    fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
+    printf("Error: Command not found :(\n");
     fsm_usart_reset_input_data(p_fsm_jukebox->p_fsm_usart);
     return;
 }
@@ -315,6 +362,7 @@ static void do_sleep_wait_command(fsm_t * p_this){
     port_lcd_clear();
     port_lcd_set_cursor(0, 0);
     port_lcd_print_str("Zzz");
+    //port_system_sleep();
 }
 
 static void do_sleep_while_off(fsm_t * p_this){
@@ -361,6 +409,7 @@ void fsm_jukebox_init(fsm_t *p_this, fsm_t *p_fsm_button, uint32_t on_off_press_
     p_fsm->p_fsm_usart = p_fsm_usart;
     p_fsm->p_fsm_buzzer = p_fsm_buzzer;
     p_fsm->next_song_press_time_ms = next_song_press_time_ms;
+    p_fsm->game_state = WAITING;
     p_fsm->melody_idx = 0;
     memset(p_fsm->melodies, EMPTY_BUFFER_CONSTANT, sizeof(p_fsm->melodies));
     p_fsm->melodies[0] = scale_melody;
