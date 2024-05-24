@@ -87,5 +87,6 @@ extern const melody_t sailor_melody;
 extern const melody_t espana_melody;
 
 extern const melody_t mario_melody;
+extern const melody_t iscale_melody;
 
 #endif /* MELODIES_H_ */
