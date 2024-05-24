@@ -3,7 +3,7 @@
  * @brief Header for fsm_buzzer.c file.
  * @author Pablo Morales
  * @author Noel Solís
- * @date 12-5-24
+ * @date 2-5-24
  */
 
 #ifndef FSM_BUZZER_H_
@@ -41,7 +41,7 @@ enum  	USER_ACTIONS {
 
 /* Typedefs --------------------------------------------------------------------*/
 
-/// @brief Structure that defines a USART FSM
+/// @brief Structure that defines a BUZZER FSM
 typedef struct{
     fsm_t f;                    /*!< FSM for the buzzer */
     melody_t *p_melody;         /*!< Pointer to the current melody */
@@ -82,8 +82,14 @@ uint8_t fsm_buzzer_get_action (fsm_t *p_this);
 /// @return 
 fsm_t   *fsm_buzzer_new (uint32_t buzzer_id);
 
+/// @brief Initialize a buzzer finite state machine. 
+/// @param p_this Pointer to an fsm_t struct than contains an fsm_buzzer_t struct 
+/// @param buzzer_id Unique buzzer identifier number 
 void 	fsm_buzzer_init (fsm_t *p_this, uint32_t buzzer_id);
 
+/// @brief Check if the buzzer finite state machine is playing a melody. 
+/// @param p_this 
+/// @return True if the player is playing or paused. False if the player is stopped. 
 bool 	fsm_buzzer_check_activity (fsm_t *p_this);
 
 #endif /* FSM_BUZZER_H_ */

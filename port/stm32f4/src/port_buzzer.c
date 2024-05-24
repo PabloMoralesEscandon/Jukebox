@@ -1,9 +1,9 @@
 /**
  * @file port_buzzer.c
  * @brief Portable functions to interact with the Buzzer melody player FSM library.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Pablo Morales
+ * @author Noel Solis
+ * @date 2-5-24
  */
 /* Includes ------------------------------------------------------------------*/
 /* Standard C libraries */
