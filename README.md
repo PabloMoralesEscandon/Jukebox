@@ -125,7 +125,7 @@ Desarrollo del código específico a la placa.
 #### Demonstración comunicación módulo 4
 Hemos realizado la medida solicitada en el laboratorio con el osciloscopio correspondiente a una comunicación entre el ordenador y la jukebox al utilizar el comando "info"
 
-![RespuestaJukebox](docs/assets/imgs/capturaOsculoscopioV4.png)
+![RespuestaJukebox](docs/assets/imgs/capturaOsciloscopioV4.png)
 
 
 ## Version 5
