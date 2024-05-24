@@ -1,9 +1,9 @@
 /**
  * @file fsm_jukebox.c
  * @brief Jukebox FSM main file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Pablo Morales
+ * @author Noel Solis
+ * @date 2-5-24
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -81,6 +81,8 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
     return true;
 }
 
+/// @brief Check if any of the elements of the system is active. 
+/// @param p_fsm_jukebox Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
 void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
     fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, STOP);
     (p_fsm_jukebox->melody_idx) +=1;
@@ -94,6 +96,10 @@ void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
     fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, PLAY);
 }
 
+/// @brief Execute the command received by the USART. 
+/// @param p_fsm_jukebox Pointer to the Jukebox FSM. 
+/// @param p_command Pointer to the command to be executed. 
+/// @param p_param Pointer to the parameter of the command to be executed. 
 void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_param){
     if(!strcmp(p_command,"play")){
         fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, PLAY);
@@ -144,21 +150,33 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
 
 /* State machine input or transition functions */
 
+/// @brief Check if the button has been pressed for the required time to turn ON the Jukebox. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
+/// @return 
 static bool check_on(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     uint32_t duration = fsm_button_get_duration(p_fsm->p_fsm_button);
     return ((duration > 0) && (duration > (p_fsm->on_off_press_time_ms)));
 }
 
+/// @brief Check if the button has been pressed for the required time to turn OFF the Jukebox. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
+/// @return 
 static bool check_off(fsm_t * p_this){
      return check_on(p_this);
 }
 
+/// @brief Check if the buzzer has finished playing the melody. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
+/// @return 
 static bool check_melody_finished(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     return (fsm_buzzer_get_action(p_fsm->p_fsm_buzzer) == STOP);
 }
 
+/// @brief Check if the USART has received data. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
+/// @return 
 static bool check_command_received(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     if(fsm_usart_check_data_received(p_fsm->p_fsm_usart)){
@@ -168,6 +186,9 @@ static bool check_command_received(fsm_t * p_this){
     return fsm_usart_check_data_received(p_fsm->p_fsm_usart);
 }
 
+/// @brief Check if the button has been pressed for the required time to load the next song. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
+/// @return 
 static bool check_next_song_button(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     return (
@@ -176,6 +197,9 @@ static bool check_next_song_button(fsm_t * p_this){
         (fsm_button_get_duration(p_fsm->p_fsm_button) < p_fsm->on_off_press_time_ms)
     );
 }
+/// @brief Check if any of the elements of the system is active. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
+/// @return 
 static bool check_activity(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     return (
@@ -185,12 +209,17 @@ static bool check_activity(fsm_t * p_this){
     );
 }
 
+/// @brief Check if all the is system active. 
+/// @param p_this Pointer to an fsm_t struct than contains an fsm_jukebox_t. 
+/// @return 
 static bool check_no_activity(fsm_t * p_this){
     return !check_activity(p_this);
 }
 
 /* State machine output or action functions */
 
+/// @brief Initialize the Jukebox by playing the intro melody, at the beginning of the program. 
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_jukebox_t. 
 static void do_start_up(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
@@ -201,12 +230,16 @@ static void do_start_up(fsm_t * p_this){
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
 }
 
+/// @brief After playing the intro melody, start the Jukebox. 
+/// @param p_this 
 static void do_start_jukebox(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     (p_fsm->melody_idx) = 0;
     (p_fsm->p_melody) = ((p_fsm->melodies[0]).p_name);
 }
 
+/// @brief Turn the Jukebox OFF. 
+/// @param p_this 
 static void do_stop_jukebox(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
@@ -216,12 +249,15 @@ static void do_stop_jukebox(fsm_t * p_this){
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, STOP);
 }
 
+/// @brief Load the next song. 
+/// @param p_this 
 static void do_load_next_song(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     _set_next_song(p_fsm);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
 }
-
+/// @brief Read the command received by the USART. 
+/// @param p_this 
 static void do_read_command(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     char p_message[USART_INPUT_BUFFER_LENGTH];
@@ -236,22 +272,31 @@ static void do_read_command(fsm_t * p_this){
     memset(p_message, EMPTY_BUFFER_CONSTANT, USART_INPUT_BUFFER_LENGTH);
 }
 
+/// @brief Start the low power mode while the Jukebox is OFF. 
+/// @param p_this 
 static void do_sleep_off(fsm_t * p_this){
     port_system_sleep();
 }
 
+/// @brief Start the low power mode while the Jukebox is waiting for a command. 
+/// @param p_this 
 static void do_sleep_wait_command(fsm_t * p_this){
     // port_system_sleep();
 }
 
+/// @brief Start the low power mode while the Jukebox is OFF
+/// @param p_this 
 static void do_sleep_while_off(fsm_t * p_this){
     port_system_sleep();
 }
 
+/// @brief Start the low power mode while the Jukebox is ON. 
+/// @param p_this 
 static void do_sleep_while_on(fsm_t * p_this){
     port_system_sleep();
 }
 
+/// @brief Jukebox's FSM matrix
 static fsm_trans_t fsm_trans_jukebox[] = {
     {OFF, check_no_activity, SLEEP_WHILE_OFF, do_sleep_off},
     {SLEEP_WHILE_OFF, check_no_activity, SLEEP_WHILE_OFF, do_sleep_while_off},

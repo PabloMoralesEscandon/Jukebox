@@ -246,10 +246,21 @@ void port_system_gpio_exti_enable(uint8_t pin, uint8_t priority, uint8_t subprio
  */
 void port_system_gpio_exti_disable(uint8_t pin);
 
+/// @brief Read the digital value of a GPIO
+/// @param p_port 
+/// @param pin 
+/// @return The digital value of a GPIO
 bool port_system_gpio_read(GPIO_TypeDef * p_port, uint8_t pin);
 
+/// @brief Write the digital value of a GPIO
+/// @param p_port 
+/// @param pin 
+/// @param value 
 void port_system_gpio_write(GPIO_TypeDef * p_port, uint8_t pin, bool value);
 
+/// @brief Toggle the value of a GPIO
+/// @param p_port 
+/// @param pin 
 void port_system_gpio_toggle(GPIO_TypeDef * p_port, uint8_t pin);
 
 /// @brief Put system in Stop Mode
