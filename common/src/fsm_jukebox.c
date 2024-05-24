@@ -207,42 +207,11 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
             p_fsm_jukebox->game_state = GAMING;
             return;
         }
-        
-        //Falta implementar todo el juego, usando este comando para 
-        //activarlo, tras iniciar el juego debería sonar un sonido 
-        //genérico de aviso y posteriormente comenzar una canción
-        //En cualquier momento tras el inicio de esta canción puedes
-        //usar el comando pick 1, 2 etc para hacer tu guess de qué
-        //canción se trata
-
-        //Cuando estemos jugando tendremos que tener algun flag levantado
-        //y guardar que cancion es la que ha tocado (o sacar la que está
-        //siendo reproducida como con el comando de info que tenemos ya 
-        //implementado). Si la acierta
         return;
     }
-    // if(!strcmp(p_command,"pick")){
-    //     char msg[USART_OUTPUT_BUFFER_LENGTH];
-    //     if(p_fsm_jukebox->game_state!=GAMING){
-    //         sprintf(msg, "Begin a guess game before trying to guess the song\n");
-    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-    //         return;
-    //     }
-        
-    //     sprintf(msg, "You have guessed%s\n",p_command);
-    //     fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-    //     bool check = !strcmp(p_param,p_fsm_jukebox->p_melody);
-    //     if(check) {
-    //         sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
-    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-    //     }else {
-    //         sprintf(msg, "The correct answer was %s\nSo your guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
-    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
-    //     }
-
-    //     return;
-    // }
     if(p_fsm_jukebox->game_state==GAMING) {
+        char msg[USART_OUTPUT_BUFFER_LENGTH];
+
         if(!strcmp(p_command,p_fsm_jukebox->p_melody)){
 
             sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
