@@ -105,7 +105,7 @@ void _show_vol(char* volume){
     port_lcd_print_str("VOLUME:");
     port_lcd_set_cursor(0,1);
     port_lcd_print_str(volume);
-    port_lcd_print_str("%%");
+    port_lcd_print_str("%");
 }
 
 void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
@@ -150,7 +150,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         (p_fsm_jukebox->volume) = MIN(param, 1.0);
         char buffer[3];
         sprintf(buffer, "%d", (int)((p_fsm_jukebox->volume)*100));
-        printf("Current volume: %d%%\n");
+        printf("Current volume: %s%%\n", buffer);
         _show_vol(buffer);
         return;
     }
@@ -243,18 +243,18 @@ static void do_start_up(fsm_t * p_this){
     fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
     fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[0]));
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
-}
-
-static void do_start_jukebox(fsm_t * p_this){
-    fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
-    (p_fsm->melody_idx) = 0;
-    (p_fsm->p_melody) = ((p_fsm->melodies[0]).p_name);
     port_lcd_clear();
     port_lcd_set_cursor(0, 0);
     port_lcd_print_str("JUKEBOX ON");
     port_lcd_set_cursor(0, 1);
     port_lcd_print_str(":D");
     port_lcd_backlight();
+}
+
+static void do_start_jukebox(fsm_t * p_this){
+    fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
+    (p_fsm->melody_idx) = 0;
+    (p_fsm->p_melody) = ((p_fsm->melodies[0]).p_name);
 }
 
 static void do_stop_jukebox(fsm_t * p_this){
@@ -294,16 +294,18 @@ static void do_sleep_off(fsm_t * p_this){
 
 static void do_sleep_wait_command(fsm_t * p_this){
     // port_system_sleep();
+    port_lcd_clear();
+    port_lcd_set_cursor(0, 0);
+    port_lcd_print_str("Zzz");
 }
 
 static void do_sleep_while_off(fsm_t * p_this){
+    
     port_system_sleep();
 }
 
 static void do_sleep_while_on(fsm_t * p_this){
-    port_lcd_clear();
-    port_lcd_set_cursor(0, 0);
-    port_lcd_print_str("Zzz");
+
     port_system_sleep();
 }
 

@@ -186,9 +186,7 @@ void port_buzzer_set_note_frequency(uint32_t buzzer_id, double frequency_hz, dou
       // Load prescaler register
       TIM3->PSC = (uint32_t)round(PSC);
       // Set PWM width
-      double ccr1 = ARR * 0.5;
-      ccr1 = round(ccr1);
-      TIM3->CCR1 = (volume * (ARR + 1));
+      TIM3->CCR1 = (uint32_t)round(ARR * volume);
       // Values are loaded into active registers
       TIM3->EGR = TIM_EGR_UG;
       // Enable output compare

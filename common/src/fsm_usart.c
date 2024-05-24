@@ -133,6 +133,7 @@ void fsm_usart_disable_tx_interrupt(fsm_t *p_this){
 
 void fsm_usart_enable_rx_interrupt(fsm_t *p_this){
     fsm_usart_t *p_fsm = (fsm_usart_t *)(p_this);
+    port_usart_reset_input_buffer(p_fsm->usart_id);
     port_usart_enable_rx_interrupt(p_fsm->usart_id);
 }
 

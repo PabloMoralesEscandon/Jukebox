@@ -157,7 +157,7 @@ void fsm_buzzer_init(fsm_t *p_this, uint32_t buzzer_id){
     p_fsm->note_index = 0;
     p_fsm->user_action = 0;
     p_fsm->player_speed = 1.0;
-    p_fsm->player_speed = 1.0;
+    p_fsm->player_volume = 0.5;
     port_buzzer_init(buzzer_id);
 
 
@@ -182,8 +182,9 @@ void fsm_buzzer_set_action(fsm_t *p_this, uint8_t action){
     if(action==0) p_fsm->note_index=0;
 }
 
-void fsm_buzzer_set_speed(fsm_t *p_this, double volume){
+void fsm_buzzer_set_volume(fsm_t *p_this, double volume){
     fsm_buzzer_t *p_fsm = (fsm_buzzer_t *)(p_this);
+    if (volume == 1.0) volume = 0.95;
     p_fsm->player_volume = volume;
 }
 

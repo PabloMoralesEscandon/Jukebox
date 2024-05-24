@@ -56,6 +56,8 @@ void    fsm_buzzer_set_melody (fsm_t *p_this, const melody_t *p_melody);
 
 void 	fsm_buzzer_set_speed (fsm_t *p_this, double speed);
 
+void fsm_buzzer_set_volume(fsm_t *p_this, double volume);
+
 void 	fsm_buzzer_set_action (fsm_t *p_this, uint8_t action);
 
 uint8_t fsm_buzzer_get_action (fsm_t *p_this);
