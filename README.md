@@ -4,7 +4,7 @@
 ## Authors
 
 * **Pablo Morales Escandón** - email: [pablo.morales@alumnos.upm.es](mailto:pablo.morales@alumnos.upm.es)
-* **Noel Solís Verdesoto** - email: [alumno@alumno.es](mailto:alumno@alumno.es)
+* **Noel Solís Verdesoto** - email: [alumno@alumno.es](mailto:noel.solis@alumnos.upm.es)
 
 
 Desarrollo de un programa capaz de emitir melodías por un Buzzer en la placa Nucleo-STM32. A futuro aún no hemos decidido que más implementaremos.
@@ -71,11 +71,56 @@ Desarrollo del código específico a la placa.
 
 
 ## Version 3
-**WIP**
+Desarrollo del código para la implementación del buzzer
+
+- Se desarrolla el código completo para un solo buzzer pero preparada para más.
+- Se hace uso de una máquina de estados (FSM) para contolar el estado del buzzer.
+- Se agregan las melodías y se integran con las funcionalidades de reproducción del buzzer
+
+### Common
+Desarrollo de la librería common (de uso general).
+
+* [fsm_buzzer.h](fsm__buzzer_8h.html).
+* [fsm_buzzer.c](fsm__buzzer_8c.html).
+
+Se implementa la FSM acorde a la siguiente tabla:
+![Tabla de la FSM del botón](docs/assets/imgs/fsmbuzzer.png)
+
+### Port
+Desarrollo del código específico a la placa.
+
+* [port_buzzer.h](port__buzzer_8h.html).
+* [port_buzzer.c](port__buzzer_8c.html).
 
 
 ## Version 4
-**WIP**
+Desarrollo del código para la implementación del modo de bajo consumo y la integración global del sistema
+
+- Se crea la jukebox como elemento central del sistema a través del cual se gestionan todos los demás componentes.
+- Se hace uso de una máquina de estados (FSM) para contolar el estado de la jukebox.
+- Se implementan diferentes comandos para la interacción con la jukebox por medio de la interfaz USART
+    1. Play: Comienza o continua la reproducción de la canción seleccionada
+    2. Stop: Detiene la reproducción de la canción seleccionada
+    3. Pause: Pausa la reproducción de la canción seleccionada
+    4. Speed: Modifica la velocidad de reproducción de la canción pudiendo tanto ralentizarla como acelerarla
+    5. Next: Comienza a reproducir la siguiente canción
+    6. Select: Seleciona la canción a reproducir 
+    7. Info: Muestra la canción seleccionada
+
+### Common
+Desarrollo de la librería common (de uso general).
+
+* [fsm_jukebox.h](fsm__jukebox_8h.html).
+* [fsm_jukebox.c](fsm__jukebox_8c.html).
+
+Se implementa la FSM acorde a la siguiente tabla:
+![Tabla de la FSM del botón](docs/assets/imgs/fsmjukebox.png)
+
+### Port
+Desarrollo del código específico a la placa.
+
+* [port_jukebox.h](port__jukebox_8h.html).
+* [port_jukebox.c](port__jukebox_8c.html).
 
 
 ## Version 5
