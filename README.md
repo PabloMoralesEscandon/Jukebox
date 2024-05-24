@@ -1,4 +1,4 @@
-# Juxebox V1 y V2
+# Jukebox V1, V2, V3 y V4
 
 
 ## Authors
@@ -7,7 +7,7 @@
 * **Noel Solís Verdesoto** - email: [alumno@alumno.es](mailto:noel.solis@alumnos.upm.es)
 
 
-Desarrollo de un programa capaz de emitir melodías por un Buzzer en la placa Nucleo-STM32. A futuro aún no hemos decidido que más implementaremos.
+Desarrollo de un programa capaz de reproducir melodías almacenadas en memoria usando un Buzzer controlado por la placa Nucleo-STM32 que se comunica con un ordenador a través de un módulo USART. 
 
 **Montaje actual:**
 
@@ -15,16 +15,7 @@ Desarrollo de un programa capaz de emitir melodías por un Buzzer en la placa Nu
 
 Por ahora unicamente es capaz de recibir y enviar información por la interfaz UART y de detectar pulsaciones del botón de usuario.
 
-### Desmotración
-Usando el programa de test proporcionado podemos ver que la placa es capaz de detectar la pulsación del botón y enviar por la terminal serie (mediante la interfaz UART) un mensaje.
 
-![Mensaje de la placa](docs/assets/imgs/mensajeplaca.png)
-
-A su vez la placa es capaz de leer un mensaje enviado por el ordenador, en este caso imprime el contenido leído a la terminal.  
-
-![Mensaje del ordenador](docs/assets/imgs/mensajeordenador.png)  
-
-![Respuesta de la placa](docs/assets/imgs/respuestaplaca.png)  
 
 ## Version 1
 Desarrollo del código para un botón.
@@ -69,6 +60,16 @@ Desarrollo del código específico a la placa.
 * [port_usart.h](port__usart_8h.html).
 * [port_usart.c](port__usart_8c.html).
 
+#### Demonstración comunicación por Usart
+Usando el programa de test proporcionado podemos ver que la placa es capaz de detectar la pulsación del botón y enviar por la terminal serie (mediante la interfaz UART) un mensaje.
+
+![Mensaje de la placa](docs/assets/imgs/mensajeplaca.png)
+
+A su vez la placa es capaz de leer un mensaje enviado por el ordenador, en este caso imprime el contenido leído a la terminal.  
+
+![Mensaje del ordenador](docs/assets/imgs/mensajeordenador.png)  
+
+![Respuesta de la placa](docs/assets/imgs/respuestaplaca.png)  
 
 ## Version 3
 Desarrollo del código para la implementación del buzzer
