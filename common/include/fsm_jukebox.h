@@ -34,6 +34,12 @@ enum FSM_JUKEBOX{
     SLEEP_WHILE_ON
 };
 
+enum GAME_STATE{
+    WAITING = 0,
+    GAMING,
+};
+
+
 /* Typedefs ------------------------------------------------------------------*/
 
 typedef struct{
@@ -47,6 +53,7 @@ typedef struct{
     fsm_t *p_fsm_buzzer;
     uint32_t next_song_press_time_ms;
     double speed;
+    uint8_t game_state;
 } fsm_jukebox_t;
 
 /* Function prototypes and explanation ---------------------------------------*/
