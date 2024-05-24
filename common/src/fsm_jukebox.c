@@ -266,7 +266,7 @@ static void do_shut_off(fsm_t * p_this){
     fsm_button_reset_duration(p_fsm->p_fsm_button);
     _send(p_fsm->p_fsm_usart, "Jukebox OFF :( \n");
     fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
-    fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[6])); // Elegir canción de apagado
+    fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[7])); // Elegir canción de apagado
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
     port_lcd_clear();
     port_lcd_set_cursor(0, 0);
