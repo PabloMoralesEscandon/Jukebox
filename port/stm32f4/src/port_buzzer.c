@@ -150,7 +150,7 @@ bool port_buzzer_get_note_timeout(uint32_t buzzer_id){
   return buzzers_arr[buzzer_id].note_end;
 }
 
-void port_buzzer_set_note_frequency(uint32_t buzzer_id, double frequency_hz){
+void port_buzzer_set_note_frequency(uint32_t buzzer_id, double frequency_hz, double volume){
   // Check if frequency is 0
   if(frequency_hz == 0){
      // Activate PWM mode
@@ -186,9 +186,7 @@ void port_buzzer_set_note_frequency(uint32_t buzzer_id, double frequency_hz){
       // Load prescaler register
       TIM3->PSC = (uint32_t)round(PSC);
       // Set PWM width
-      double ccr1 = ARR * 0.5;
-      ccr1 = round(ccr1);
-      TIM3->CCR1 = (BUZZER_PWM_DC * (ARR + 1));
+      TIM3->CCR1 = (uint32_t)round(ARR * volume);
       // Values are loaded into active registers
       TIM3->EGR = TIM_EGR_UG;
       // Enable output compare

@@ -64,6 +64,6 @@ void port_buzzer_set_note_duration(uint32_t buzzer_id, uint32_t duration_ms);
 /// @brief Set PMW period to match desired frequency
 /// @param buzzer_id The unique identifier of the buzzer
 /// @param frequency_hz The desired frequency
-void port_buzzer_set_note_frequency(uint32_t buzzer_id, double frequency_hz);
+void port_buzzer_set_note_frequency(uint32_t buzzer_id, double frequency_hz, double volume);
 
 #endif

@@ -9,7 +9,9 @@
 #include "port_system.h"
 
 /* Defines -------------------------------------------------------------------*/
+#ifndef HSI_VALUE
 #define HSI_VALUE ((uint32_t)16000000) /*!< Value of the Internal oscillator in Hz */
+#endif
 
 /* GLOBAL VARIABLES */
 static volatile uint32_t msTicks = 0; /*!< Variable to store millisecond ticks. @warning **It must be declared volatile!** Just because it is modified in an ISR. **Add it to the definition** after *static*. */
