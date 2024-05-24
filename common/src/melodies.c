@@ -273,3 +273,37 @@ const melody_t mario_melody = {.p_name = "mario",
                                     .p_notes = (double *)mario_melody_notes,
                                     .p_durations = (uint16_t *)mario_melody_durations,
                                     .melody_length = MARIO_MELODY_LENGTH};
+
+//comentario inut
+
+// Scale Melody
+#define ISCALE_MELODY_LENGTH 8   /*!< Scale melody length */
+
+/**
+ * @brief Scale melody notes.
+ *
+ * This array contains the frequencies of the notes for the scale song.
+ * The notes are defined as frequency values in Hertz, and they are arranged in the order they are played in the song.
+ */
+static const double iscale_melody_notes[ISCALE_MELODY_LENGTH] = {
+    DO5, SI4, LA4, SOL4, FA4, MI4, RE4, DO4};
+
+/**
+ * @brief Scale melody durations in miliseconds.
+ * 
+ * This array contains the duration of each note in the scale song.
+ * The durations are defined in milliseconds, and they are arranged in the order they are played in the song.
+ */
+static const uint16_t iscale_melody_durations[SCALE_MELODY_LENGTH] = {
+    250, 250, 250, 250, 250, 250, 250, 250};
+
+/**
+ * @brief Scale melody struct.
+ * 
+ * This struct contains the information of the scale melody.
+ * It is used to play the melody using the buzzer.
+ */
+const melody_t iscale_melody = {.p_name = "scale",
+                               .p_notes = (double *)scale_melody_notes,
+                               .p_durations = (uint16_t *)scale_melody_durations,
+                               .melody_length = SCALE_MELODY_LENGTH};
