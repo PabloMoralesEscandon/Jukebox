@@ -170,28 +170,49 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         //implementado). Si la acierta
         return;
     }
-    if(!strcmp(p_command,"pick")){
-        char msg[USART_OUTPUT_BUFFER_LENGTH];
-        if(p_fsm_jukebox->game_state!=GAMING){
-            sprintf(msg, "Begin a guess game before trying to guess the song\n");
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-            return;
-        }
+    // if(!strcmp(p_command,"pick")){
+    //     char msg[USART_OUTPUT_BUFFER_LENGTH];
+    //     if(p_fsm_jukebox->game_state!=GAMING){
+    //         sprintf(msg, "Begin a guess game before trying to guess the song\n");
+    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+    //         return;
+    //     }
         
-        sprintf(msg, "You have guessed%s\n",p_command);
-        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-        bool check = !strcmp(p_param,p_fsm_jukebox->p_melody);
-        if(check) {
+    //     sprintf(msg, "You have guessed%s\n",p_command);
+    //     fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+    //     bool check = !strcmp(p_param,p_fsm_jukebox->p_melody);
+    //     if(check) {
+    //         sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
+    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+    //     }else {
+    //         sprintf(msg, "The correct answer was %s\nSo your guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
+    //         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+    //     }
+
+    //     return;
+    // }
+    if(p_fsm_jukebox->game_state==GAMING) {
+        if(!strcmp(p_command,p_fsm_jukebox->p_melody)){
+
             sprintf(msg, "The correct answer was %s\nSo your guess is correct! :)\n", p_fsm_jukebox->p_melody);
             fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-        }else {
-            sprintf(msg, "The correct answer was %s\nSo your guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
+            p_fsm_jukebox->game_state=GAMING;
+            return;
+        } else{
+            sprintf(msg, "The correct answer was %s\nSo you have lost as the guess is incorrect! :(\n", p_fsm_jukebox->p_melody);
             fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+            sprintf(msg, "Remember you can give up at any time with the command <<GIVE UP>>\n");
+            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+            return;
         }
-
+    }
+    if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
+        p_fsm_jukebox->game_state=WAITING;
+        sprintf(msg, "The correct answer was %s\n My disappointment is immeasurable and my day is ruined :(\n", p_fsm_jukebox->p_melody);
+        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg); 
         return;
     }
-    
+
     fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
     printf("Error: Command not found :(\n");
     fsm_usart_reset_input_data(p_fsm_jukebox->p_fsm_usart);
