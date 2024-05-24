@@ -1,10 +1,10 @@
-# Jukebox V1, V2, V3 y V4
+# Jukebox V1, V2, V3, V4 y V5
 
 
 ## Authors
 
 * **Pablo Morales Escandón** - email: [pablo.morales@alumnos.upm.es](mailto:pablo.morales@alumnos.upm.es)
-* **Noel Solís Verdesoto** - email: [alumno@alumno.es](mailto:noel.solis@alumnos.upm.es)
+* **Noel Solís Verdesoto** - email: [noel.solis@alumnos.upm.es](mailto:noel.solis@alumnos.upm.es)
 
 
 Desarrollo de un programa capaz de reproducir melodías almacenadas en memoria usando un Buzzer controlado por la placa Nucleo-STM32 que se comunica con un ordenador a través de un módulo USART. 
