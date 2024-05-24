@@ -152,7 +152,7 @@ Implementado un juego de adivinar canciones en el que tras utilizar el comando "
 Para facilitar y habilitar la implementación de nuevas canciones hemos hecho uso de un script de python que puede convertir canciones en formato .ino en los arrays de tonos y duraciones y la longitud de los mismos para su integración en nuestro sistema. Podrá encontrar el script tonedelay.py en la carpeta Docs
 
 ### Funciones de visualización simultánea por terminal de comandos y Usart
-Con el motivo de incrementar la robustez del sistema frente a problemas con la comunicación USART se han implementado funciones que envían la información de forma simultánea a través de diferentes canales para garantizar que llegue al usuario
+Con el motivo de incrementar la robustez del sistema frente a problemas con la comunicación USART se han implementado funciones en el módulo jukebox que envían la información de forma simultánea a través de diferentes canales para garantizar que llegue al usuario
 
 ### Canción de despedida
 Se ha implementado una canción de despedida en el sistema que se activa cuando se apaga la placa. Para esto se ha tenido que modificar la estructura de la maquina de estados de jukebox agregando un estado equivalente a START UP resultando en que se usen dos estados diferentes para el apagado del sistema.
@@ -163,6 +163,9 @@ Se ha añadido la posibilidad de ajustar el volumen del buzzer, para esto se han
 ### Módulo de comunicaciones IR por NEC
 Se ha implementado y codificado las librerías para establecer comunicaciones entre un mando a distancia con un módulo receptor NEC del sistema. Esta implementación se ha realizado haciendo uso de una máquina de estados que trabaja con las diferentes fases requeridas para entablar una comunicación NEC. 
 Actualmente el módulo no se encuentra funcional porque el voltaje que genera la recepción de la señal IR no llega a ser suficiente para excitar los pines de la placa en la mayoría de los casos.
+
+* [port_nec.h](port__nec_8h.html).
+* [port_nec.c](port__nec_8c.html).
 
 ### Caja impresa en 3D
 Como se ve en la imagen hemos impreso una caja para albergar la placa de forma segura, esta sigue permitiendo cómodo acceso a los pines además de los botones tanto el de usuario como el de reinicio ![Montaje de la V5](docs/assets/imgs/montajeV5.png)
