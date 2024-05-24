@@ -16,7 +16,8 @@
 
 
 /* State machine output or action functions */
-static void _start_motor(fsm_t *p_this, double freq){   
+static void _start_motor(fsm_t *p_this){  
+    double freq = 500; 
     fsm_motor_t *p_fsm = (fsm_motor_t *)(p_this);
 
     port_motor_set_frequency(p_fsm->motor_id, freq);
@@ -36,9 +37,8 @@ static bool check_motor_stop(fsm_t *p_this){
 }
 
 
-static void do_motor_start(fsm_t *p_this, double freq){
-    fsm_motor_t *p_fsm = (fsm_motor_t *)(p_this);
-    _start_motor(p_this,freq);
+static void do_motor_start(fsm_t *p_this){;
+    _start_motor(p_this);
 }
 
 static void do_motor_stop (fsm_t *p_this){

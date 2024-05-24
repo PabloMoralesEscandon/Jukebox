@@ -81,6 +81,10 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
     return true;
 }
 
+static uint32_t _random(uint32_t min, uint32_t max){
+   return (uint32_t)min + rand() / (RAND_MAX / (max - min + 1) + 1);
+}
+
 void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
     fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, STOP);
     (p_fsm_jukebox->melody_idx) +=1;
@@ -141,7 +145,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         char msg[USART_OUTPUT_BUFFER_LENGTH];
         sprintf(msg, "Gaming\n");
         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-        uint32_t melody_selected = random(0,3)
+        uint32_t melody_selected = _random(0,3);
         if(p_fsm_jukebox->melodies[melody_selected].melody_length > 0){
             fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, STOP);
             p_fsm_jukebox->melody_idx = melody_selected;
@@ -167,12 +171,13 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         return;
     }
     if(!strcmp(p_command,"pick")){
+        char msg[USART_OUTPUT_BUFFER_LENGTH];
         if(p_fsm_jukebox->game_state!=GAMING){
-            sprintf(msg, "Begin gaming before trying to guess the song\n");
+            sprintf(msg, "Begin a guess game before trying to guess the song\n");
             fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
             return;
         }
-        char msg[USART_OUTPUT_BUFFER_LENGTH];
+        
         sprintf(msg, "You have guessed%s\n",p_command);
         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
         bool check = !strcmp(p_param,p_fsm_jukebox->p_melody);
@@ -292,7 +297,7 @@ static void do_sleep_off(fsm_t * p_this){
 }
 
 static void do_sleep_wait_command(fsm_t * p_this){
-    port_system_sleep();
+    //port_system_sleep();
 }
 
 static void do_sleep_while_off(fsm_t * p_this){
@@ -301,10 +306,6 @@ static void do_sleep_while_off(fsm_t * p_this){
 
 static void do_sleep_while_on(fsm_t * p_this){
     port_system_sleep();
-}
-
-static uint32_t random(uint32_t min, uint32_t max){
-   return (uint32_t)min + rand() / (RAND_MAX / (max - min + 1) + 1);
 }
 
 static fsm_trans_t fsm_trans_jukebox[] = {
