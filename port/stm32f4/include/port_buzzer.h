@@ -1,9 +1,9 @@
 /**
  * @file port_buzzer.h
  * @brief Header for port_buzzer.c file.
- * @author alumno1
- * @author alumno2
- * @date fecha
+ * @author Pablo Morales
+ * @author Noel Solis
+ * @date 2-5-24
  */
 #ifndef PORT_BUZZER_H_
 #define PORT_BUZZER_H_
