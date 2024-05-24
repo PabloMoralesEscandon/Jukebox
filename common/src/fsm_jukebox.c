@@ -86,7 +86,7 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
 
 void _send(fsm_t *p_fsm_usart, char* message){
     printf(message);
-    //fsm_usart_set_out_data(p_fsm_usart, message);
+    fsm_usart_set_out_data(p_fsm_usart, message);
 
 }
 
