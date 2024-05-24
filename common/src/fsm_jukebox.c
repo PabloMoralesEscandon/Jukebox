@@ -266,7 +266,7 @@ static void do_shut_off(fsm_t * p_this){
     fsm_button_reset_duration(p_fsm->p_fsm_button);
     _send(p_fsm->p_fsm_usart, "Jukebox OFF :( \n");
     fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
-    fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[3])); // Elegir canción de apagado
+    fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[6])); // Elegir canción de apagado
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
     port_lcd_clear();
     port_lcd_set_cursor(0, 0);
@@ -368,8 +368,8 @@ void fsm_jukebox_init(fsm_t *p_this, fsm_t *p_fsm_button, uint32_t on_off_press_
     p_fsm->melodies[2] = tetris_melody;
     p_fsm->melodies[3] = megalovania_melody;
     p_fsm->melodies[4] = sailor_melody;
-    p_fsm->melodies[5] = WII_melody;
-    p_fsm->melodies[5] = mario_melody;
+    p_fsm->melodies[5] = espana_melody;
+    p_fsm->melodies[6] = mario_melody;
     p_fsm->volume = 0.5;
 }
 

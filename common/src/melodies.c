@@ -109,12 +109,12 @@ const melody_t scale_melody = {.p_name = "scale",
                                .melody_length = SCALE_MELODY_LENGTH};
 
 // Megalovania Melody
-#define MEGALOVANIA_MELODY_LENGTH 19   /*!< WII melody length */
+#define MEGALOVANIA_MELODY_LENGTH 19   /*!< espana melody length */
 
 /**
  * @brief Megalovania melody notes.
  *
- * This array contains the frequencies of the notes for the WII song.
+ * This array contains the frequencies of the notes for the espana song.
  * The notes are defined as frequency values in Hertz, and they are arranged in the order they are played in the song.
  */
 static const double megalovania_melody_notes[MEGALOVANIA_MELODY_LENGTH] = {
@@ -201,44 +201,44 @@ const melody_t sailor_melody = {.p_name = "sailor",
                                     .p_durations = (uint16_t *)sailor_melody_durations,
                                     .melody_length = SAILOR_MELODY_LENGTH};
 
-// WII Melody
+// espana Melody
 
-#define WII_MELODY_LENGTH 272   /*!< WII melody length */
+#define espana_MELODY_LENGTH 272   /*!< espana melody length */
 
 /**
- * @brief WII melody notes.
+ * @brief espana melody notes.
  *
- * This array contains the frequencies of the notes for the WII song.
+ * This array contains the frequencies of the notes for the espana song.
  * The notes are defined as frequency values in Hertz, and they are arranged in the order they are played in the song.
  */
-static const double WII_melody_notes[WII_MELODY_LENGTH] = {
+static const double espana_melody_notes[espana_MELODY_LENGTH] = {
     392.0, 659.0, 523.0, 784.0, 698.0, 659.0, 587.0, 523.0, 523.0, 494.0, 440.0, 392.0, 523.0, 587.0, 659.0, 784.0, 698.0, 659.0, 587.0, 523.0, 784.0, 392.0, 440.0, 494.0, 523.0, 392.0, 659.0, 523.0, 784.0, 698.0, 659.0, 587.0, 523.0, 523.0, 494.0, 440.0, 392.0, 523.0, 587.0, 659.0, 784.0, 698.0, 659.0, 587.0, 523.0, 784.0, 784.0, 659.0, 784.0, 698.0, 587.0, 698.0, 659.0, 523.0, 659.0, 587.0, 392.0, 440.0, 494.0, 523.0, 587.0, 659.0, 698.0, 784.0, 698.0, 659.0, 587.0, 523.0, 784.0, 659.0, 784.0, 698.0, 587.0, 698.0, 659.0, 523.0, 659.0, 587.0, 392.0, 440.0, 494.0, 523.0, 587.0, 659.0, 698.0, 784.0, 698.0, 659.0, 587.0, 523.0, 349.0, 262.0, 440.0, 349.0, 523.0, 
 466.0, 440.0, 392.0, 349.0, 349.0, 330.0, 294.0, 262.0, 349.0, 392.0, 440.0, 523.0, 466.0, 440.0, 392.0, 349.0, 523.0, 262.0, 294.0, 330.0, 349.0, 262.0, 440.0, 349.0, 523.0, 466.0, 440.0, 392.0, 349.0, 349.0, 330.0, 294.0, 262.0, 349.0, 392.0, 440.0, 523.0, 466.0, 440.0, 392.0, 349.0, 523.0, 523.0, 440.0, 523.0, 466.0, 392.0, 466.0, 440.0, 349.0, 440.0, 392.0, 262.0, 294.0, 330.0, 349.0, 392.0, 440.0, 466.0, 523.0, 466.0, 440.0, 392.0, 349.0, 523.0, 440.0, 523.0, 466.0, 392.0, 466.0, 440.0, 349.0, 440.0, 392.0, 262.0, 294.0, 330.0, 349.0, 392.0, 440.0, 466.0, 523.0, 466.0, 440.0, 392.0, 349.0, 523.0, 392.0, 659.0, 523.0, 784.0, 698.0, 659.0, 587.0, 523.0, 523.0, 494.0, 440.0, 392.0, 523.0, 587.0, 659.0, 784.0, 698.0, 659.0, 587.0, 523.0, 784.0, 392.0, 440.0, 494.0, 
 523.0, 392.0, 659.0, 523.0, 784.0, 698.0, 659.0, 587.0, 523.0, 523.0, 494.0, 440.0, 392.0, 523.0, 587.0, 659.0, 784.0, 698.0, 659.0, 587.0, 523.0, 784.0, 784.0, 659.0, 784.0, 698.0, 587.0, 698.0, 659.0, 523.0, 659.0, 587.0, 392.0, 440.0, 494.0, 523.0, 587.0, 659.0, 698.0, 784.0, 698.0, 659.0, 587.0, 523.0, 784.0, 659.0, 784.0, 698.0, 587.0, 698.0, 659.0, 523.0, 659.0, 587.0, 392.0, 440.0, 494.0, 523.0, 587.0, 659.0, 698.0, 784.0, 698.0, 659.0, 587.0, 523.0  
 };
 
 /**
- * @brief WII melody durations in miliseconds.
+ * @brief espana melody durations in miliseconds.
  * 
- * This array contains the duration of each note in the WII song.
+ * This array contains the duration of each note in the espana song.
  * The durations are defined in milliseconds, and they are arranged in the order they are played in the song.
  */
-static const uint16_t WII_melody_durations[WII_MELODY_LENGTH] = {
+static const uint16_t espana_melody_durations[espana_MELODY_LENGTH] = {
         677.0, 677.0, 257.0, 245.0, 332.0, 219.0, 249.0, 212.0, 315.0, 268.0, 273.0, 236.0, 629.0, 609.0, 931.0, 251.0, 220.0, 240.0, 221.0, 243.0, 798.0, 111.0, 147.0, 145.0, 626.0, 589.0, 581.0, 353.0, 219.0, 249.0, 229.0, 200.0, 173.0, 282.0, 232.0, 221.0, 234.0, 578.0, 588.0, 855.0, 272.0, 248.0, 255.0, 248.0, 192.0, 1024.0, 646.0, 368.0, 122.0, 702.0, 378.0, 149.0, 694.0, 296.0, 220.0, 249.0, 254.0, 266.0, 242.0, 618.0, 631.0, 484.0, 160.0, 261.0, 282.0, 658.0, 603.0, 1184.0, 641.0, 357.0, 160.0, 704.0, 339.0, 155.0, 756.0, 297.0, 196.0, 283.0, 272.0, 261.0, 207.0, 605.0, 670.0, 430.0, 154.0, 255.0, 222.0, 602.0, 669.0, 1317.0, 607.0, 586.0, 637.0, 325.0, 222.0, 276.0, 242.0, 224.0, 190.0, 233.0, 332.0, 306.0, 252.0, 625.0, 517.0, 912.0, 269.0, 264.0, 293.0, 232.0, 283.0, 804.0, 120.0, 121.0, 112.0, 688.0, 502.0, 670.0, 309.0, 252.0, 269.0, 278.0, 282.0, 200.0, 303.0, 292.0, 311.0, 275.0, 641.0, 595.0, 936.0, 276.0, 302.0, 291.0, 271.0, 263.0, 1132.0, 714.0, 333.0, 177.0, 685.0, 271.0, 
 219.0, 715.0, 332.0, 187.0, 293.0, 285.0, 310.0, 300.0, 682.0, 580.0, 447.0, 153.0, 263.0, 277.0, 616.0, 571.0, 1044.0, 664.0, 334.0, 220.0, 692.0, 255.0, 179.0, 743.0, 299.0, 199.0, 250.0, 244.0, 276.0, 306.0, 564.0, 567.0, 509.0, 124.0, 240.0, 255.0, 716.0, 664.0, 1133.0, 735.0, 588.0, 714.0, 372.0, 261.0, 309.0, 277.0, 335.0, 248.0, 290.0, 331.0, 315.0, 314.0, 700.0, 630.0, 934.0, 267.0, 294.0, 312.0, 292.0, 243.0, 845.0, 119.0, 115.0, 124.0, 783.0, 528.0, 723.0, 295.0, 261.0, 243.0, 278.0, 301.0, 256.0, 345.0, 315.0, 308.0, 330.0, 674.0, 557.0, 
 894.0, 255.0, 285.0, 290.0, 275.0, 243.0, 1163.0, 742.0, 321.0, 166.0, 792.0, 361.0, 199.0, 747.0, 305.0, 213.0, 333.0, 269.0, 312.0, 327.0, 643.0, 663.0, 498.0, 150.0, 295.0, 254.0, 646.0, 584.0, 1270.0, 765.0, 421.0, 197.0, 744.0, 423.0, 186.0, 775.0, 380.0, 189.0, 301.0, 238.0, 283.0, 261.0, 621.0, 692.0, 570.0, 140.0, 296.0, 268.0, 760.0, 782.0, 2514.0    
 };
 
 /**
- * @brief WII melody struct.
+ * @brief espana melody struct.
  * 
- * This struct contains the information of the WII melody.
+ * This struct contains the information of the espana melody.
  * It is used to play the melody using the buzzer.
  */
-const melody_t WII_melody = {.p_name = "WII",
-                                    .p_notes = (double *)WII_melody_notes,
-                                    .p_durations = (uint16_t *)WII_melody_durations,
-                                    .melody_length = WII_MELODY_LENGTH};
+const melody_t espana_melody = {.p_name = "espana",
+                                    .p_notes = (double *)espana_melody_notes,
+                                    .p_durations = (uint16_t *)espana_melody_durations,
+                                    .melody_length = espana_MELODY_LENGTH};
 
                                     
 // Mario lose melody

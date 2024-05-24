@@ -84,7 +84,7 @@ extern const melody_t megalovania_melody;
 // Espana melody
 extern const melody_t sailor_melody;
 
-extern const melody_t WII_melody;
+extern const melody_t espana_melody;
 
 extern const melody_t mario_melody;
 

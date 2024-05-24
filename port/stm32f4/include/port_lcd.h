@@ -59,76 +59,76 @@
 /// @brief I2C address shifted one bit to the left as a 7 bit address is expected
 #define DEVICE_ADDR     (0x27 << 1)
 
-/// @brief 
+/// @brief Initializes lcd screen
 /// @param rows 
 void port_lcd_init(uint8_t rows);
 
-/// @brief 
+/// @brief Clears lcd screen
 void port_lcd_clear();
 
-/// @brief 
+/// @brief Returns lcd to home state
 void port_lcd_home();
 
-/// @brief 
+/// @brief Turns off lcd display
 void port_lcd_no_display();
 
-/// @brief 
+/// @brief Turns on lcd display
 void port_lcd_display();
 
-/// @brief 
+/// @brief Turns off cursor blink on the lcd display
 void port_lcd_no_blink();
 
-/// @brief 
+/// @brief Turns on cursor blink on the lcd display
 void port_lcd_blink();
 
-/// @brief 
+/// @brief Does not show cursor on the lcd display
 void port_lcd_no_cursor();
 
-/// @brief 
+/// @brief Shows cursor on the lcd display
 void port_lcd_cursor();
 
-/// @brief 
+/// @brief Scrolls lcd display to the left
 void port_lcd_scroll_display_left();
 
-/// @brief 
+/// @brief Scrolls lcd display to the right
 void port_lcd_scroll_display_right();
 
-/// @brief 
+/// @brief Sets print to the left
 void port_lcd_print_left();
 
-/// @brief 
+/// @brief Sets print to the right
 void port_lcd_print_right();
 
-/// @brief 
+/// @brief Sets print from left to right
 void port_lcd_left_to_right();
 
-/// @brief 
+/// @brief Sets print from right to left
 void port_lcd_right_to_left();
 
-/// @brief 
+/// @brief INcrements lcd shift
 void port_lcd_shift_increment();
 
-/// @brief 
+/// @brief Decrements lcd shift
 void port_lcd_shift_decrement();
 
-/// @brief 
+/// @brief Turns off lcd backlight
 void port_lcd_no_backlight();
 
-/// @brief 
+/// @brief Turns on lcd backlight
 void port_lcd_backlight();
 
-/// @brief 
+/// @brief Turns on lcd autoscoll
 void port_lcd_autoscroll();
 
-/// @brief 
+/// @brief Turns off lcd autoscoll
 void port_lcd_no_autoscroll();
 
-/// @brief 
-/// @param  
-/// @param  
+/// @brief Creates special custom character on the lcd screen
+/// @param  uint8_t Character id
+/// @param  uint8_t[] Character memory info
 void port_lcd_create_special_char(uint8_t, uint8_t[]);
 
-/// @brief 
+/// @brief Prints custom character
 /// @param  
 void port_lcd_print_special_char(uint8_t);
 
