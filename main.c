@@ -34,8 +34,6 @@
 
 #include "fsm_nec.h"
 
-#include "port_nec.h"
-
 #include "port_lcd.h"
 
 /* Defines ------------------------------------------------------------------*/
@@ -79,10 +77,6 @@ int main(void)
     fsm_t* p_fsm_user_buzzer = fsm_buzzer_new(BUZZER_0_ID);
 
     fsm_t* p_fsm_user_jukebox = fsm_jukebox_new(p_fsm_user_button, ON_OFF_PRESS_TIME_MS, p_fsm_user_usart, p_fsm_user_buzzer, NEXT_SONG_BUTTON_TIME_MS);
-
-    // fsm_t* p_fsm_user_NEC = fsm_NEC_new(NEC_0_ID);
-    // fsm_NEC_t *p_fsm = (fsm_NEC_t *)(p_fsm_user_NEC);
-    // int message;
 
     /* Infinite loop */
     while (1)
