@@ -228,6 +228,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     }
     if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
         p_fsm_jukebox->game_state=WAITING;
+        char msg[USART_OUTPUT_BUFFER_LENGTH];
         sprintf(msg, "The correct answer was %s\n My disappointment is immeasurable and my day is ruined :(\n", p_fsm_jukebox->p_melody);
         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg); 
         return;
