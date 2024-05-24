@@ -55,6 +55,9 @@ void fsm_NEC_init(fsm_t *p_this, uint32_t NEC_id);
 /// @return true if active, false if not
 bool fsm_NEC_check_activity(fsm_t *p_this);
 
+/// @brief Get the NEC decoded message
+/// @param p_this Pointer to an fsm_t struct that contains an fsm_NEC_t
+/// @return The decoded message
 uint32_t fsm_NEC_get_message(fsm_t *p_this);
 
 
