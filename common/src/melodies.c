@@ -303,7 +303,7 @@ static const uint16_t iscale_melody_durations[SCALE_MELODY_LENGTH] = {
  * This struct contains the information of the scale melody.
  * It is used to play the melody using the buzzer.
  */
-const melody_t iscale_melody = {.p_name = "scale",
-                               .p_notes = (double *)scale_melody_notes,
-                               .p_durations = (uint16_t *)scale_melody_durations,
-                               .melody_length = SCALE_MELODY_LENGTH};
+const melody_t iscale_melody = {.p_name = "iscale",
+                               .p_notes = (double *)iscale_melody_notes,
+                               .p_durations = (uint16_t *)iscale_melody_durations,
+                               .melody_length = ISCALE_MELODY_LENGTH};
