@@ -9,6 +9,8 @@
 
 Desarrollo de un programa capaz de reproducir melodías almacenadas en memoria usando un Buzzer controlado por la placa Nucleo-STM32 que se comunica con un ordenador a través de un módulo USART. 
 
+Esta versión es la correspondiente al módulo 5, si desea cambiar a la implementación del módulo cuatro sustituya las carpetas common y port además del archivo main.c por los correspondientes.
+
 **Montaje actual:**
 
 ![Montaje de la V5](docs/assets/imgs/montajeV5.png)
