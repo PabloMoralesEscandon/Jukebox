@@ -31,7 +31,8 @@ enum FSM_JUKEBOX{
     START_UP,
     WAIT_COMMAND,
     SLEEP_WHILE_OFF,
-    SLEEP_WHILE_ON
+    SLEEP_WHILE_ON,
+    SHUT_OFF
 };
 
 /* Typedefs ------------------------------------------------------------------*/

@@ -84,6 +84,12 @@ bool _parse_message(char *p_message, char *p_command, char *p_param)
     return true;
 }
 
+void _send(fsm_t *p_fsm_usart, char* message){
+    printf(message);
+    //fsm_usart_set_out_data(p_fsm_usart, message);
+
+}
+
 
 void _show_song(char* song_name){
     port_lcd_clear();
@@ -116,7 +122,9 @@ void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
         p_fsm_jukebox->melody_idx = 0;
     }
     p_fsm_jukebox->p_melody = p_fsm_jukebox->melodies[p_fsm_jukebox->melody_idx].p_name;
-    printf("Now playing: %s :) \n", p_fsm_jukebox->p_melody);
+    char msg[USART_OUTPUT_BUFFER_LENGTH];
+    sprintf(msg, "Now playing: %s :) \n", p_fsm_jukebox->p_melody);
+    _send(p_fsm_jukebox->p_fsm_usart, msg);
     fsm_buzzer_set_melody(p_fsm_jukebox->p_fsm_buzzer, &p_fsm_jukebox->melodies[p_fsm_jukebox->melody_idx]);
     fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, PLAY);
     _show_song(p_fsm_jukebox->p_melody);
@@ -150,8 +158,10 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         (p_fsm_jukebox->volume) = MIN(param, 1.0);
         char buffer[3];
         sprintf(buffer, "%d", (int)((p_fsm_jukebox->volume)*100));
-        printf("Current volume: %s%%\n", buffer);
         _show_vol(buffer);
+        char msg[USART_OUTPUT_BUFFER_LENGTH];
+        sprintf(msg, "Current volume: %s%%\n", buffer);
+        _send(p_fsm_jukebox->p_fsm_usart, msg);
         return;
     }
     if(!strcmp(p_command,"next")){
@@ -170,18 +180,16 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
             _show_song(p_fsm_jukebox->p_melody);
             return;
         }
-        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Melody not found :(\n");
-        printf("Error: Melody not found :(\n");
+        _send(p_fsm_jukebox->p_fsm_usart, "Error: Melody not found :(\n");
         return;
     }
     if(!strcmp(p_command,"info")){
         char msg[USART_OUTPUT_BUFFER_LENGTH];
         sprintf(msg, "Playing: %s\n", p_fsm_jukebox->p_melody);
-        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+        _send(p_fsm_jukebox->p_fsm_usart, msg);
         return;
     }
-    fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
-    printf("Error: Command not found :(\n");
+    _send(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
     fsm_usart_reset_input_data(p_fsm_jukebox->p_fsm_usart);
     return;
 }
@@ -205,10 +213,6 @@ static bool check_melody_finished(fsm_t * p_this){
 
 static bool check_command_received(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
-    if(fsm_usart_check_data_received(p_fsm->p_fsm_usart)){
-        printf("Command received\n");
-    }
-    
     return fsm_usart_check_data_received(p_fsm->p_fsm_usart);
 }
 
@@ -239,7 +243,7 @@ static void do_start_up(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
     fsm_usart_enable_rx_interrupt(p_fsm->p_fsm_usart);
-    printf("Jukebox ON :) \n");
+    _send(p_fsm->p_fsm_usart, "Jukebox ON :) \n");
     fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
     fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[0]));
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
@@ -257,12 +261,26 @@ static void do_start_jukebox(fsm_t * p_this){
     (p_fsm->p_melody) = ((p_fsm->melodies[0]).p_name);
 }
 
+static void do_shut_off(fsm_t * p_this){
+    fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
+    fsm_button_reset_duration(p_fsm->p_fsm_button);
+    _send(p_fsm->p_fsm_usart, "Jukebox OFF :( \n");
+    fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
+    fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[3])); // Elegir canción de apagado
+    fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
+    port_lcd_clear();
+    port_lcd_set_cursor(0, 0);
+    port_lcd_print_str("JUKEBOX OFF");
+    port_lcd_set_cursor(0, 1);
+    port_lcd_print_str(":(");
+    port_lcd_backlight();
+}
+
 static void do_stop_jukebox(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
     fsm_usart_disable_rx_interrupt(p_fsm->p_fsm_usart);
     fsm_usart_disable_tx_interrupt(p_fsm->p_fsm_usart);
-    printf("Jukebox OFF :( \n");
     port_lcd_clear();
     port_lcd_no_backlight();
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, STOP);
@@ -315,7 +333,8 @@ static fsm_trans_t fsm_trans_jukebox[] = {
     {SLEEP_WHILE_OFF, check_activity, OFF, NULL},
     {OFF, check_on, START_UP, do_start_up},
     {START_UP, check_melody_finished, WAIT_COMMAND, do_start_jukebox},
-    {WAIT_COMMAND, check_off, OFF, do_stop_jukebox},
+    {WAIT_COMMAND, check_off, SHUT_OFF, do_shut_off},
+    {SHUT_OFF, check_melody_finished, OFF, do_stop_jukebox},
     {WAIT_COMMAND, check_next_song_button, WAIT_COMMAND, do_load_next_song},
     {WAIT_COMMAND, check_command_received, WAIT_COMMAND, do_read_command},
     {WAIT_COMMAND, check_no_activity, SLEEP_WHILE_ON, do_sleep_wait_command},
