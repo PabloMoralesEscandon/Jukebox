@@ -124,30 +124,30 @@ void port_lcd_autoscroll();
 void port_lcd_no_autoscroll();
 
 /// @brief Creates special custom character on the lcd screen
-/// @param  uint8_t Character id
-/// @param  uint8_t[] Character memory info
-void port_lcd_create_special_char(uint8_t, uint8_t[]);
+/// @param  id Character id
+/// @param  info Character memory info
+void port_lcd_create_special_char(uint8_t id, uint8_t[]);
 
 /// @brief Prints custom character
-/// @param  
-void port_lcd_print_special_char(uint8_t);
+/// @param  uint8_t Char id
+void port_lcd_print_special_char(uint8_t id);
 
-/// @brief 
-/// @param  
-/// @param  
-void port_lcd_set_cursor(uint8_t, uint8_t);
+/// @brief Sets lcd cursor at desired position
+/// @param  col Cursor column
+/// @param  row Cursor row
+void port_lcd_set_cursor(uint8_t col, uint8_t row);
 
-/// @brief 
-/// @param new_val 
+/// @brief Sets backlight on or off
+/// @param new_val On or off
 void port_lcd_set_backlight(uint8_t new_val);
 
-/// @brief 
-/// @param char_num 
-/// @param rows 
+/// @brief Loads custom character from memory
+/// @param char_num Character id
+/// @param rows Number of rows
 void port_lcd_load_custom_character(uint8_t char_num, uint8_t *rows);
 
-/// @brief 
-/// @param  
-void port_lcd_print_str(const char[]);
+/// @brief Prints a string on the lcd
+/// @param  String
+void port_lcd_print_str(const char[] );
 
 #endif /* LIQUIDCRYSTAL_I2C_H_ */
