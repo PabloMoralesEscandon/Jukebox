@@ -22,6 +22,8 @@
 
 /* Defines and enums ----------------------------------------------------------*/
 /* Enums */
+
+/// @brief FSM States
 enum  	FSM_BUZZER {
   WAIT_START = 0,
   PLAY_NOTE,
@@ -30,6 +32,7 @@ enum  	FSM_BUZZER {
   WAIT_MELODY
 };
 
+/// @brief Possible User Actions when interacting with the buzzer
 enum  	USER_ACTIONS {
   STOP = 0,
   PLAY,
@@ -51,14 +54,29 @@ typedef struct{
 
 /* Function prototypes and explanation -------------------------------------------------*/
 
+/// @brief Sets the melody to play
+/// @param p_this Pointer to an fsm_t struct than contains an fsm_buzzer_t struct 
+/// @param p_melody Pointer to the melody to play 
 void    fsm_buzzer_set_melody (fsm_t *p_this, const melody_t *p_melody);
 
+/// @brief Sets speed at which melody is reproduced
+/// @param p_this Pointer to an fsm_t struct than contains an fsm_buzzer_t struct 
+/// @param speed Speed to set
 void 	fsm_buzzer_set_speed (fsm_t *p_this, double speed);
 
+/// @brief Sets the action to perform on the player
+/// @param p_this Pointer to an fsm_t struct than contains an fsm_buzzer_t struct 
+/// @param action  Action to set
 void 	fsm_buzzer_set_action (fsm_t *p_this, uint8_t action);
 
+/// @brief Gets the current user's action
+/// @param p_this Pointer to an fsm_t struct than contains an fsm_buzzer_t struct 
+/// @return 
 uint8_t fsm_buzzer_get_action (fsm_t *p_this);
 
+/// @brief Creates a new buzzer finite state machine
+/// @param buzzer_id 
+/// @return 
 fsm_t   *fsm_buzzer_new (uint32_t buzzer_id);
 
 void 	fsm_buzzer_init (fsm_t *p_this, uint32_t buzzer_id);
