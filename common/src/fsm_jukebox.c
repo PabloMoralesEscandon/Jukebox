@@ -114,7 +114,7 @@ void _show_vol(char* volume){
 }
 
 static uint32_t _random(uint32_t min, uint32_t max){
-    return (uint32_t)(rand()%7+1)
+    return (uint32_t)(rand()%max+min)
 //    return (uint32_t)(min + rand() / (RAND_MAX / (max - min + 1) + 1));
 }
 
@@ -201,7 +201,7 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         char msg[USART_OUTPUT_BUFFER_LENGTH];
         sprintf(msg, "Gaming\n");
         fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-        uint32_t melody_selected = _random(0,3);
+        uint32_t melody_selected = _random(0,7);
         if(p_fsm_jukebox->melodies[melody_selected].melody_length > 0){
             fsm_buzzer_set_action(p_fsm_jukebox->p_fsm_buzzer, STOP);
             p_fsm_jukebox->melody_idx = melody_selected;
