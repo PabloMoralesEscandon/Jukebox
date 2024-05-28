@@ -247,7 +247,6 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     }
 
     _send(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
-    printf("Error: Command not found :(\n");
     fsm_usart_reset_input_data(p_fsm_jukebox->p_fsm_usart);
     return;
 }
