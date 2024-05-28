@@ -114,7 +114,8 @@ void _show_vol(char* volume){
 }
 
 static uint32_t _random(uint32_t min, uint32_t max){
-   return (uint32_t)min + rand() / (RAND_MAX / (max - min + 1) + 1);
+    return (uint32_t)(rand()%7+1)
+//    return (uint32_t)(min + rand() / (RAND_MAX / (max - min + 1) + 1));
 }
 
 void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
@@ -171,6 +172,10 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         _set_next_song(p_fsm_jukebox);
         return;
     }
+    if(!strcmp(p_command,"next")){
+        _set_next_song(p_fsm_jukebox);
+        return;
+    }
     if(!strcmp(p_command,"select")){
         uint32_t melody_selected = atoi(p_param);
         if(p_fsm_jukebox->melodies[melody_selected].melody_length > 0){
@@ -212,30 +217,21 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
     if(p_fsm_jukebox->game_state==GAMING) {
         char msg[USART_OUTPUT_BUFFER_LENGTH];
         if(!strcmp(p_command,p_fsm_jukebox->p_melody)){
-            sprintf(msg, "The correct answer was %s\n", p_fsm_jukebox->p_melody);
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-            sprintf(msg, "So your guess is correct! :)\n");
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
+            sprintf(msg, "The correct answer was %s. So your guess is correct! :)\n", p_fsm_jukebox->p_melody);
+            _send(p_fsm_jukebox->p_fsm_usart, msg);
             p_fsm_jukebox->game_state=WAITING;
             return;
         } else{
-            sprintf(msg, "The correct answer was %s\n", p_fsm_jukebox->p_melody);
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-            sprintf(msg, "So your guess is incorrect! :(\n");
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-            sprintf(msg, "Remember you can give up at any time with the command <<GIVE UP>>\n");
-            fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);  
+            sprintf(msg, "So your guess is incorrect! Remember you can give up at any time with the command <<GIVE UP>>\n");
+            _send(p_fsm_jukebox->p_fsm_usart, msg);
             return;
         }
     }
     if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
         p_fsm_jukebox->game_state=WAITING;
         char msg[USART_OUTPUT_BUFFER_LENGTH];
-        sprintf(msg, "The correct answer was %s\n", p_fsm_jukebox->p_melody);
-        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-        sprintf(msg, "Im dissapointed in you for not keeping on trying :(\n");
-        fsm_usart_set_out_data(p_fsm_jukebox->p_fsm_usart, msg);
-
+        sprintf(msg, "The correct answer was %s. Im dissapointed in you for not keeping on trying\n", p_fsm_jukebox->p_melody);
+        _send(p_fsm_jukebox->p_fsm_usart, msg);
         return;
     }
 
