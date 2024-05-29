@@ -116,7 +116,7 @@ void _show_vol(char* volume){
 static uint32_t _random(uint32_t min, uint32_t max){
     if(1>=max|| max == 0)
         return 1;
-    return (uint32_t)((rand()%max))
+    return (uint32_t)((rand()%max));
 //    return (uint32_t)(min + rand() / (RAND_MAX / (max - min + 1) + 1));
 }
 
@@ -137,17 +137,26 @@ void _set_next_song(fsm_jukebox_t * p_fsm_jukebox){
 }
 
 void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_param){
+
+    if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
+        p_fsm_jukebox->game_state=WAITING;
+        char msg[USART_OUTPUT_BUFFER_LENGTH];
+        sprintf(msg, "The correct answer was %s. Im dissapointed in you for not keeping on trying\n", p_fsm_jukebox->p_melody);
+        _send(p_fsm_jukebox->p_fsm_usart, msg);
+        return;
+    }
+
     if(p_fsm_jukebox->game_state==GAMING) {
         char msg[USART_OUTPUT_BUFFER_LENGTH];
         if(!strcmp(p_command,p_fsm_jukebox->p_melody)){
             sprintf(msg, "The correct answer was %s. So your guess is correct! :)\n", p_fsm_jukebox->p_melody);
             _send(p_fsm_jukebox->p_fsm_usart, msg);
-            _show_state("Congratulations")
+            _show_state("YOU WIN!");
             p_fsm_jukebox->game_state=WAITING;
             return;
         } else{
-            sprintf(msg, "So your guess is incorrect! Remember you can give up at any time with the command <<GIVE UP>>\n");
-            _show_state("Failed Guess")
+            sprintf(msg, "So your guess is incorrect! Remember you can give up at any time with the command <give up>\n");
+            _show_state("Failed Guess");
             _send(p_fsm_jukebox->p_fsm_usart, msg);
             return;
         }
@@ -238,13 +247,6 @@ void _execute_command(fsm_jukebox_t * p_fsm_jukebox, char * p_command, char * p_
         }
         return;
     }
-    if((!strcmp(p_command,"give"))&&(!strcmp(p_param,"up"))){
-        p_fsm_jukebox->game_state=WAITING;
-        char msg[USART_OUTPUT_BUFFER_LENGTH];
-        sprintf(msg, "The correct answer was %s. Im dissapointed in you for not keeping on trying\n", p_fsm_jukebox->p_melody);
-        _send(p_fsm_jukebox->p_fsm_usart, msg);
-        return;
-    }
 
     _send(p_fsm_jukebox->p_fsm_usart, "Error: Command not found :(\n");
     fsm_usart_reset_input_data(p_fsm_jukebox->p_fsm_usart);
@@ -321,6 +323,7 @@ static void do_start_jukebox(fsm_t * p_this){
 static void do_shut_off(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
+    fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, STOP);
     _send(p_fsm->p_fsm_usart, "Jukebox OFF :( \n");
     fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
     p_fsm->melody_idx = 0;
