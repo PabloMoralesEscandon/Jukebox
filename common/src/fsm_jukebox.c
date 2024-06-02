@@ -331,7 +331,6 @@ static void do_start_up(fsm_t * p_this){
     fsm_jukebox_t *p_fsm = (fsm_jukebox_t *)(p_this);
     fsm_button_reset_duration(p_fsm->p_fsm_button);
     fsm_usart_enable_rx_interrupt(p_fsm->p_fsm_usart);
-    _send(p_fsm->p_fsm_usart, "Jukebox ON :) \n");
     fsm_buzzer_set_speed(p_fsm->p_fsm_buzzer, 1.0);
     fsm_buzzer_set_melody(p_fsm->p_fsm_buzzer, &(p_fsm->melodies[0]));
     fsm_buzzer_set_action(p_fsm->p_fsm_buzzer, PLAY);
@@ -341,6 +340,7 @@ static void do_start_up(fsm_t * p_this){
     port_lcd_set_cursor(0, 1);
     port_lcd_print_str(":D");
     port_lcd_backlight();
+    printf("Jukebox ON :) \n");
 }
 
 /// @brief After playing the intro melody, start the Jukebox. 
